@@ -4,31 +4,34 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url      = env("DATABASE_URL")
 }
 
 model exercise_instance {
   duration         Float?
+  exerciseId       Int
   id               Int              @default(autoincrement()) @id
   repetitions      Int?
   sessionId        Int
   weight           Float?
+  exercise         exercise         @relation(fields: [exerciseId], references: [id])
   exercise_session exercise_session @relation(fields: [sessionId], references: [id])
 }
 
 model exercise_session {
   id                Int                 @default(autoincrement()) @id
   note              String?
-  timestamp         Int
+  timestamp         DateTime?           @default(now())
   userId            Int
   user              user                @relation(fields: [userId], references: [id])
   exercise_instance exercise_instance[]
 }
 
 model exercise {
-  id    Int    @default(autoincrement()) @id
-  label String
-  name  String @unique
+  id                Int                 @default(autoincrement()) @id
+  label             String
+  name              String              @unique
+  exercise_instance exercise_instance[]
 }
 
 model user {
