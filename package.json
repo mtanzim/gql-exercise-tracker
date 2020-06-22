@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "make-db": "sqlite3 ./prisma/dev.db < ./prisma/schema.sql",
-    "make-prisma": "npx prisma introspect && npx prisma generate"
+    "make-prisma": "npx prisma introspect && npx prisma generate",
+    "start:dev": "node src/index.js"
   },
   "keywords": [],
   "author": "",
