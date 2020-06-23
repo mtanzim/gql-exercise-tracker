@@ -15,7 +15,14 @@ const prisma = new PrismaClient();
 
 const server = new GraphQLServer({
   schema: makeSchema({
-    types: [User, Exercise, ExerciseSession, ExerciseInstance, Query, Mutation],
+    types: [
+      User,
+      Exercise,
+      ExerciseSession,
+      ExerciseInstance,
+      Query,
+      Mutation,
+    ],
     plugins: [nexusPrismaPlugin({ experimentalCRUD: true })],
     outputs: {
       schema: __dirname + "/../schema.graphql",

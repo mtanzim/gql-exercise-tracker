@@ -1,4 +1,4 @@
-const { objectType, stringArg, intArg, floatArg } = require("@nexus/schema");
+const { objectType, mutationType, stringArg, intArg, floatArg } = require("@nexus/schema");
 
 const User = objectType({
   name: "user",
@@ -16,6 +16,13 @@ const Exercise = objectType({
     t.model.name();
   },
 });
+
+// // auto-gen CRUD
+// const AutoCrud = mutationType({
+//   definition(t) {
+//   },
+// })
+
 
 const ExerciseInstance = objectType({
   name: "exercise_instance",
@@ -42,6 +49,18 @@ const ExerciseSession = objectType({
 const Mutation = objectType({
   name: "Mutation",
   definition(t) {
+    // auto-gen deletes
+    t.crud.deleteOneuser({})
+    t.crud.deleteOneexercise({})
+    t.crud.deleteOneexercise_instance({})
+    t.crud.deleteOneexercise_session({})    
+    // auto-gen updates
+    t.crud.updateOneuser({})
+    t.crud.updateOneexercise({})
+    t.crud.updateOneexercise_instance({})
+    t.crud.updateOneexercise_session({})
+
+
     t.field("signupUser", {
       type: "user",
       args: {
@@ -158,6 +177,7 @@ const Query = objectType({
     });
   },
 });
+
 
 module.exports = {
   User,

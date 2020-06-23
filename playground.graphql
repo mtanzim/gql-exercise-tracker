@@ -1,0 +1,99 @@
+# Write your query or mutation here
+query Exercises {
+  exercises {
+    id
+    label
+    name
+  }
+}
+
+query Users {
+  users {
+    id
+    name
+    email
+  }
+}
+
+query Sessions {
+  exerciseSessions {
+    id
+    note
+    timestamp
+    user {
+      id
+      name
+      email
+    }
+  }
+}
+
+query Instances {
+  exerciseInstances {
+    id
+    weight
+    duration
+    repetitions
+    exercise {
+      name
+      label
+    }
+    exercise_session {
+      id
+      timestamp
+      user {
+        email
+      }
+    }
+  }
+}
+
+mutation CreateExerciseInstance {
+  createExerciseInstance(
+    exerciseId: 1
+    sessionId: 1
+    weight: 90
+    repetitions: 15
+  ) {
+    id
+  }
+}
+
+mutation CreateExerciseSession {
+  createExerciseSession(userId: 1, note: "My first") {
+    id
+  }
+}
+
+mutation CreateExercise {
+  createExercise(name: "Pull ups", label: "Strength") {
+    id
+  }
+}
+
+mutation CreateUser {
+  signupUser(email: "tom@gmail.com") {
+    id
+    name
+    email
+  }
+}
+
+mutation DeleteUser {
+  deleteOneuser(where: { id: 1 }) {
+    name
+    email
+    id
+  }
+}
+
+mutation UpdateUser {
+  updateOneuser(
+    where: { id: 2 }
+    data: { name: "Fom", email: "fom@gmail.com" }
+  ) {
+    name
+    email
+    id
+  }
+}
