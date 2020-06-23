@@ -396,6 +396,9 @@ export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
+  BatchPayload: { // root type
+    count: number; // Int!
+  }
   Mutation: {};
   Query: {};
   exercise: { // root type
@@ -488,13 +491,16 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  BatchPayload: { // field return type
+    count: number; // Int!
+  }
   Mutation: { // field return type
     createExercise: NexusGenRootTypes['exercise']; // exercise!
     createExerciseInstance: NexusGenRootTypes['exercise_instance']; // exercise_instance!
     createExerciseSession: NexusGenRootTypes['exercise_session']; // exercise_session!
+    deleteManyexercise_instance: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    deleteManyexercise_session: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteOneexercise: NexusGenRootTypes['exercise'] | null; // exercise
-    deleteOneexercise_instance: NexusGenRootTypes['exercise_instance'] | null; // exercise_instance
-    deleteOneexercise_session: NexusGenRootTypes['exercise_session'] | null; // exercise_session
     deleteOneuser: NexusGenRootTypes['user'] | null; // user
     signupUser: NexusGenRootTypes['user']; // user!
     updateOneexercise: NexusGenRootTypes['exercise'] | null; // exercise
@@ -552,14 +558,14 @@ export interface NexusGenArgTypes {
       note?: string | null; // String
       userId: number; // Int!
     }
+    deleteManyexercise_instance: { // args
+      where?: NexusGenInputs['exercise_instanceWhereInput'] | null; // exercise_instanceWhereInput
+    }
+    deleteManyexercise_session: { // args
+      where?: NexusGenInputs['exercise_sessionWhereInput'] | null; // exercise_sessionWhereInput
+    }
     deleteOneexercise: { // args
       where: NexusGenInputs['exerciseWhereUniqueInput']; // exerciseWhereUniqueInput!
-    }
-    deleteOneexercise_instance: { // args
-      where: NexusGenInputs['exercise_instanceWhereUniqueInput']; // exercise_instanceWhereUniqueInput!
-    }
-    deleteOneexercise_session: { // args
-      where: NexusGenInputs['exercise_sessionWhereUniqueInput']; // exercise_sessionWhereUniqueInput!
     }
     deleteOneuser: { // args
       where: NexusGenInputs['userWhereUniqueInput']; // userWhereUniqueInput!
@@ -600,7 +606,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Query" | "exercise" | "exercise_instance" | "exercise_session" | "user";
+export type NexusGenObjectNames = "BatchPayload" | "Mutation" | "Query" | "exercise" | "exercise_instance" | "exercise_session" | "user";
 
 export type NexusGenInputNames = "IntFilter" | "NullableDateTimeFilter" | "NullableFloatFilter" | "NullableIntFilter" | "NullableStringFilter" | "StringFilter" | "exerciseCreateOneWithoutExercise_instanceInput" | "exerciseCreateWithoutExercise_instanceInput" | "exerciseUpdateInput" | "exerciseUpdateOneRequiredWithoutExercise_instanceInput" | "exerciseUpdateWithoutExercise_instanceDataInput" | "exerciseUpsertWithoutExercise_instanceInput" | "exerciseWhereInput" | "exerciseWhereUniqueInput" | "exercise_instanceCreateManyWithoutExercise_sessionInput" | "exercise_instanceCreateWithoutExerciseInput" | "exercise_instanceCreateWithoutExercise_sessionInput" | "exercise_instanceFilter" | "exercise_instanceScalarWhereInput" | "exercise_instanceUpdateInput" | "exercise_instanceUpdateManyDataInput" | "exercise_instanceUpdateManyWithWhereNestedInput" | "exercise_instanceUpdateManyWithoutExerciseInput" | "exercise_instanceUpdateManyWithoutExercise_sessionInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceUpdateWithoutExerciseDataInput" | "exercise_instanceUpdateWithoutExercise_sessionDataInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceWhereInput" | "exercise_instanceWhereUniqueInput" | "exercise_sessionCreateOneWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutUserInput" | "exercise_sessionFilter" | "exercise_sessionScalarWhereInput" | "exercise_sessionUpdateInput" | "exercise_sessionUpdateManyDataInput" | "exercise_sessionUpdateManyWithWhereNestedInput" | "exercise_sessionUpdateManyWithoutUserInput" | "exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput" | "exercise_sessionUpdateWithWhereUniqueWithoutUserInput" | "exercise_sessionUpdateWithoutExercise_instanceDataInput" | "exercise_sessionUpdateWithoutUserDataInput" | "exercise_sessionUpsertWithWhereUniqueWithoutUserInput" | "exercise_sessionUpsertWithoutExercise_instanceInput" | "exercise_sessionWhereInput" | "exercise_sessionWhereUniqueInput" | "userCreateOneWithoutExercise_sessionInput" | "userCreateWithoutExercise_sessionInput" | "userUpdateInput" | "userUpdateOneRequiredWithoutExercise_sessionInput" | "userUpdateWithoutExercise_sessionDataInput" | "userUpsertWithoutExercise_sessionInput" | "userWhereInput" | "userWhereUniqueInput";
 

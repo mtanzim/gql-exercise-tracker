@@ -1,4 +1,9 @@
-const { objectType, mutationType, stringArg, intArg, floatArg } = require("@nexus/schema");
+const {
+  objectType,
+  stringArg,
+  intArg,
+  floatArg,
+} = require("@nexus/schema");
 
 const User = objectType({
   name: "user",
@@ -16,13 +21,6 @@ const Exercise = objectType({
     t.model.name();
   },
 });
-
-// // auto-gen CRUD
-// const AutoCrud = mutationType({
-//   definition(t) {
-//   },
-// })
-
 
 const ExerciseInstance = objectType({
   name: "exercise_instance",
@@ -50,16 +48,15 @@ const Mutation = objectType({
   name: "Mutation",
   definition(t) {
     // auto-gen deletes
-    t.crud.deleteOneuser({})
-    t.crud.deleteOneexercise({})
-    t.crud.deleteOneexercise_instance({})
-    t.crud.deleteOneexercise_session({})    
+    t.crud.deleteOneuser({});
+    t.crud.deleteOneexercise({});
+    t.crud.deleteManyexercise_instance({});
+    t.crud.deleteManyexercise_session({});
     // auto-gen updates
-    t.crud.updateOneuser({})
-    t.crud.updateOneexercise({})
-    t.crud.updateOneexercise_instance({})
-    t.crud.updateOneexercise_session({})
-
+    t.crud.updateOneuser({});
+    t.crud.updateOneexercise({});
+    t.crud.updateOneexercise_instance({});
+    t.crud.updateOneexercise_session({});
 
     t.field("signupUser", {
       type: "user",
@@ -163,12 +160,13 @@ const Query = objectType({
         return ctx.prisma.exercise.findMany();
       },
     });
+
     t.list.field("exerciseSessions", {
       type: "exercise_session",
       resolve: (_, _args, ctx) => {
         return ctx.prisma.exercise_session.findMany();
       },
-    });    
+    });
     t.list.field("exerciseInstances", {
       type: "exercise_instance",
       resolve: (_, _args, ctx) => {
@@ -177,7 +175,6 @@ const Query = objectType({
     });
   },
 });
-
 
 module.exports = {
   User,

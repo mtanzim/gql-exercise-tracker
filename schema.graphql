@@ -2,6 +2,10 @@
 ### Do not make changes to this file directly
 
 
+type BatchPayload {
+  count: Int!
+}
+
 scalar DateTime
 
 type exercise {
@@ -348,9 +352,9 @@ type Mutation {
   createExercise(label: String, name: String): exercise!
   createExerciseInstance(duration: Float, exerciseId: Int!, repetitions: Int, sessionId: Int!, weight: Float): exercise_instance!
   createExerciseSession(note: String, userId: Int!): exercise_session!
+  deleteManyexercise_instance(where: exercise_instanceWhereInput): BatchPayload!
+  deleteManyexercise_session(where: exercise_sessionWhereInput): BatchPayload!
   deleteOneexercise(where: exerciseWhereUniqueInput!): exercise
-  deleteOneexercise_instance(where: exercise_instanceWhereUniqueInput!): exercise_instance
-  deleteOneexercise_session(where: exercise_sessionWhereUniqueInput!): exercise_session
   deleteOneuser(where: userWhereUniqueInput!): user
   signupUser(email: String, name: String): user!
   updateOneexercise(data: exerciseUpdateInput!, where: exerciseWhereUniqueInput!): exercise

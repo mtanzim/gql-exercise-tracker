@@ -42,6 +42,7 @@ query Instances {
       id
       timestamp
       user {
+        id
         email
       }
     }
@@ -88,12 +89,28 @@ mutation DeleteUser {
 }
 
 mutation UpdateUser {
-  updateOneuser(
-    where: { id: 2 }
-    data: { name: "Fom", email: "fom@gmail.com" }
+  updateOneuser(where: { id: 2 }
+  data: {name: "Fom" email:"fom@gmail.com"}
   ) {
     name
     email
     id
   }
 }
+
+mutation DeleteManyInstances {
+  deleteManyexercise_instance (
+    where: {
+      exercise_session: {
+        user: {
+          id: {
+            equals: 1
+          }
+        }
+      }
+    }
+  ) {
+    count
+  }
+}
+
