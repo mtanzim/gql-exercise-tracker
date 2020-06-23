@@ -2,13 +2,20 @@ const { GraphQLServer } = require("graphql-yoga");
 const { PrismaClient } = require("@prisma/client");
 const { makeSchema } = require("@nexus/schema");
 const { nexusPrismaPlugin } = require("nexus-prisma");
-const { User, Exercise, Query, Mutation } = require("./nexusModels");
+const {
+  User,
+  Exercise,
+  ExerciseSession,
+  ExerciseInstance,
+  Query,
+  Mutation,
+} = require("./nexusModels");
 
 const prisma = new PrismaClient();
 
 const server = new GraphQLServer({
   schema: makeSchema({
-    types: [User, Exercise, Query, Mutation],
+    types: [User, Exercise, ExerciseSession, ExerciseInstance, Query, Mutation],
     plugins: [nexusPrismaPlugin({ experimentalCRUD: true })],
     outputs: {
       schema: __dirname + "/../schema.graphql",

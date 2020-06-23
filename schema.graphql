@@ -2,19 +2,46 @@
 ### Do not make changes to this file directly
 
 
+scalar DateTime
+
 type exercise {
   id: Int!
   label: String!
   name: String!
 }
 
+type exercise_instance {
+  duration: Float
+  exercise: exercise!
+  exercise_session: exercise_session!
+  id: Int!
+  repetitions: Int
+  weight: Float
+}
+
+input exercise_instanceWhereUniqueInput {
+  id: Int
+}
+
+type exercise_session {
+  exercise_instance(after: exercise_instanceWhereUniqueInput, before: exercise_instanceWhereUniqueInput, first: Int, last: Int): [exercise_instance!]!
+  id: Int!
+  note: String
+  timestamp: DateTime
+  user: user!
+}
+
 type Mutation {
   createExercise(label: String, name: String): exercise!
+  createExerciseInstance(duration: Float, exerciseId: Int!, repetitions: Int, sessionId: Int!, weight: Float): exercise_instance!
+  createExerciseSession(note: String, userId: Int!): exercise_session!
   signupUser(email: String, name: String): user!
 }
 
 type Query {
+  exerciseInstances: [exercise_instance!]!
   exercises: [exercise!]!
+  exerciseSessions: [exercise_session!]!
   users: [user!]!
 }
 

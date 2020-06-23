@@ -1,4 +1,4 @@
-const { objectType, stringArg } = require("@nexus/schema");
+const { objectType, stringArg, intArg, floatArg } = require("@nexus/schema");
 
 const User = objectType({
   name: "user",
@@ -14,6 +14,29 @@ const Exercise = objectType({
     t.model.id();
     t.model.label();
     t.model.name();
+  },
+});
+
+const ExerciseInstance = objectType({
+  name: "exercise_instance",
+  definition(t) {
+    t.model.id();
+    t.model.duration();
+    t.model.repetitions();
+    t.model.weight();
+    t.model.exercise();
+    t.model.exercise_session();
+  },
+});
+
+const ExerciseSession = objectType({
+  name: "exercise_session",
+  definition(t) {
+    t.model.id();
+    t.model.note();
+    t.model.timestamp();
+    t.model.user();
+    t.model.exercise_instance();
   },
 });
 const Mutation = objectType({
@@ -49,6 +72,60 @@ const Mutation = objectType({
         });
       },
     });
+    t.field("createExerciseSession", {
+      type: "exercise_session",
+      args: {
+        userId: intArg({ required: true }),
+        note: stringArg(),
+      },
+      resolve: (_, { userId, note }, ctx, _info) => {
+        return ctx.prisma.exercise_session.create({
+          data: {
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+            note,
+          },
+        });
+      },
+    });
+
+    t.field("createExerciseInstance", {
+      type: "exercise_instance",
+      args: {
+        exerciseId: intArg({ required: true }),
+        sessionId: intArg({ required: true }),
+        weight: floatArg(),
+        duration: floatArg(),
+        repetitions: intArg(),
+      },
+      resolve: (
+        _,
+        { exerciseId, sessionId, weight, duration, repetitions },
+        ctx,
+        _info
+      ) => {
+        return ctx.prisma.exercise_instance.create({
+          data: {
+            exercise: {
+              connect: {
+                id: exerciseId,
+              },
+            },
+            exercise_session: {
+              connect: {
+                id: sessionId,
+              },
+            },
+            weight,
+            duration,
+            repetitions,
+          },
+        });
+      },
+    });
   },
 });
 
@@ -67,12 +144,26 @@ const Query = objectType({
         return ctx.prisma.exercise.findMany();
       },
     });
+    t.list.field("exerciseSessions", {
+      type: "exercise_session",
+      resolve: (_, _args, ctx) => {
+        return ctx.prisma.exercise_session.findMany();
+      },
+    });    
+    t.list.field("exerciseInstances", {
+      type: "exercise_instance",
+      resolve: (_, _args, ctx) => {
+        return ctx.prisma.exercise_instance.findMany();
+      },
+    });
   },
 });
 
 module.exports = {
   User,
   Exercise,
+  ExerciseSession,
+  ExerciseInstance,
   Mutation,
   Query,
 };
