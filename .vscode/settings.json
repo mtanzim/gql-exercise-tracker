@@ -1,0 +1,28 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder:gql-exercises}/prisma/dev.db",
+            "driver": "SQLite",
+            "name": "dev",
+            "previewLimit": 50
+        },
+        {
+            "database": "${workspaceFolder:gql-exercises}/prisma/dev.db",
+            "driver": "SQLite",
+            "name": "dev",
+            "previewLimit": 50
+        },
+        {
+            "database": "${workspaceFolder:gql-exercises}/prisma/dev.db",
+            "driver": "SQLite",
+            "name": "dev",
+            "previewLimit": 50
+        },
+        {
+            "database": "${workspaceFolder:gql-exercises}/prisma/dev.db",
+            "driver": "SQLite",
+            "name": "test",
+            "previewLimit": 50
+        }
+    ]
+}
