@@ -34,59 +34,79 @@ const DELETE_EXERICSE = gql`
   }
 `;
 
-const Exercise = ({ exercise, onDelete }) => {
-  const { label, name } = exercise;
+const Exercise = ({ exercise, deleteExercise }) => {
+  const { label, name, id } = exercise;
+  const onDelete = async () => {
+    try {
+      await deleteExercise({ variables: { id } });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <ListGroup.Item>
       {name} - {label}
-      <Button className="ml-4" variant="danger" onClick={onDelete}>
+      <Button
+        onClick={onDelete}
+        className="ml-4"
+        variant="danger"
+        onClick={onDelete}
+      >
         Delete
       </Button>
     </ListGroup.Item>
   );
 };
 
-const AddExerciseForm = ({ addExercise }) => {
+const AddExerciseForm = ({ addExercise, loading }) => {
   const [values, setValues] = useState({
     name: "",
     label: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addExercise({ variables: values });
+    try {
+      await addExercise({ variables: values });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
 
+  if (loading) {
+    return <p>Submitting...</p>;
+  }
   return (
-    <form className="mt-2" onSubmit={handleSubmit}>
-      <label>
-        Name
-        <input
-          className="ml-2 mr-2"
-          type="text"
-          name="name"
-          value={values.name}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Label
-        <input
-          className="ml-2 mr-2"
-          type="text"
-          name="label"
-          value={values.label}
-          onChange={handleChange}
-        />
-      </label>
-      {/* <input type="submit" value="Add New" /> */}
-      <Button variant="primary" type="submit">
-        Add New
-      </Button>
-    </form>
+    <React.Fragment>
+      <form className="mt-2" onSubmit={handleSubmit}>
+        <label>
+          Name
+          <input
+            className="ml-2 mr-2"
+            type="text"
+            name="name"
+            value={values.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Label
+          <input
+            className="ml-2 mr-2"
+            type="text"
+            name="label"
+            value={values.label}
+            onChange={handleChange}
+          />
+        </label>
+        <Button variant="primary" type="submit">
+          Add New
+        </Button>
+      </form>
+    </React.Fragment>
   );
 };
 
@@ -112,26 +132,29 @@ export const Exercises = () => {
     },
   });
 
-  const [deleteExercise] = useMutation(DELETE_EXERICSE, {
-    update(
-      cache,
-      {
-        data: { deleteOneexercise },
-      }
-    ) {
-      const { exercises: currentExercises } = cache.readQuery({
-        query: EXERCISES,
-      });
-      cache.writeQuery({
-        query: EXERCISES,
-        data: {
-          exercises: currentExercises.filter(
-            (exc) => exc.id !== deleteOneexercise.id
-          ),
-        },
-      });
-    },
-  });
+  const [deleteExercise, { error: deleteError }] = useMutation(
+    DELETE_EXERICSE,
+    {
+      update(
+        cache,
+        {
+          data: { deleteOneexercise },
+        }
+      ) {
+        const { exercises: currentExercises } = cache.readQuery({
+          query: EXERCISES,
+        });
+        cache.writeQuery({
+          query: EXERCISES,
+          data: {
+            exercises: currentExercises.filter(
+              (exc) => exc.id !== deleteOneexercise.id
+            ),
+          },
+        });
+      },
+    }
+  );
 
   if (loading) {
     return <p>{"Loading..."}</p>;
@@ -150,16 +173,17 @@ export const Exercises = () => {
           <Exercise
             key={exc.id}
             exercise={exc}
-            onDelete={() => deleteExercise({ variables: { id: exc.id } })}
+            deleteExercise={deleteExercise}
           />
         ))}
       </ListGroup>
-      {formLoading ? (
-        "Submitting..."
-      ) : (
-        <AddExerciseForm addExercise={addExercise} className="mt-2" />
-      )}
+      <AddExerciseForm
+        loadig={formLoading}
+        addExercise={addExercise}
+        className="mt-2"
+      />
       {submitError && <p>{submitError.message}</p>}
+      {deleteError && <p>{deleteError.message}</p>}
     </div>
   );
 };
