@@ -39,7 +39,7 @@ const Exercise = ({ exercise, onDelete }) => {
   return (
     <ListGroup.Item>
       {name} - {label}
-      <Button className="ml-4" variant="danger" type="submit">
+      <Button className="ml-4" variant="danger" onClick={onDelete}>
         Delete
       </Button>
     </ListGroup.Item>
