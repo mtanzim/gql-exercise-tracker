@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Route, Switch } from "react-router-dom";
-import { Exercises } from "./components/Exercises";
+import { Exercises } from "./components/Exercises/Exercises";
 import { Forum } from "./components/Forum";
 import { Home } from "./components/Home";
 import { Navigation } from "./components/Navigation";
