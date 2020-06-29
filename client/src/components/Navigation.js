@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 
 export const Navigation = ({ user = "Guest" }) => (
   <Nav variant="tabs">
+    <Nav.Item >
+      <code className="mr-4">{user}</code>
+    </Nav.Item>
     <Nav.Item className="mr-2">
       <Link to="/">Home</Link>
     </Nav.Item>
@@ -13,6 +16,9 @@ export const Navigation = ({ user = "Guest" }) => (
     </Nav.Item>
     <Nav.Item className="mr-2">
       <Link to="/workouts">Workouts</Link>
+    </Nav.Item>
+    <Nav.Item className="mr-2">
+      <Link to="/forum">Forum</Link>
     </Nav.Item>
   </Nav>
 );

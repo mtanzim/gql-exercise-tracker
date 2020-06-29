@@ -34,8 +34,50 @@ const DELETE_EXERICSE = gql`
   }
 `;
 
-const Exercise = ({ exercise, deleteExercise }) => {
+const UPDATE_EXERCISE = gql`
+  mutation UpdateExercise($id: Int!, $name: String, $label: String) {
+    updateOneexercise(
+      where: { id: $id }
+      data: { name: $name, label: $label }
+    ) {
+      id
+      name
+      label
+    }
+  }
+`;
+
+const Exercise = ({ exercise }) => {
   const { label, name, id } = exercise;
+  const [updateExercise, { loading, error: updateError }] = useMutation(
+    UPDATE_EXERCISE
+  );
+  const [deleteExercise, { error: deleteError }] = useMutation(
+    DELETE_EXERICSE,
+    {
+      update(
+        cache,
+        {
+          data: { deleteOneexercise },
+        }
+      ) {
+        const { exercises: currentExercises } = cache.readQuery({
+          query: EXERCISES,
+        });
+        cache.writeQuery({
+          query: EXERCISES,
+          data: {
+            exercises: currentExercises.filter(
+              (exc) => exc.id !== deleteOneexercise.id
+            ),
+          },
+        });
+      },
+    }
+  );
+
+  const [isEditing, setEditing] = useState(false);
+
   const onDelete = async () => {
     try {
       await deleteExercise({ variables: { id } });
@@ -43,34 +85,58 @@ const Exercise = ({ exercise, deleteExercise }) => {
       console.error(err.message);
     }
   };
+
+  const onUpdate = async (values) => {
+    try {
+      await updateExercise({
+        variables: { id: exercise.id, ...values },
+      });
+      setEditing(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  if (isEditing) {
+    return (
+      <ListGroup.Item>
+        <ExerciseForm
+          onSubmit={onUpdate}
+          loading={loading}
+          initValues={exercise}
+        />
+        {updateError && <p>{updateError.message}</p>}
+      </ListGroup.Item>
+    );
+  }
+
   return (
     <ListGroup.Item>
       {name} - {label}
       <Button
-        onClick={onDelete}
-        className="ml-4"
-        variant="danger"
-        onClick={onDelete}
+        className="ml-2"
+        variant="primary"
+        onClick={() => setEditing(true)}
       >
+        Edit
+      </Button>
+      <Button onClick={onDelete} className="ml-2" variant="danger">
         Delete
       </Button>
+      {deleteError && <p>{deleteError.message}</p>}
     </ListGroup.Item>
   );
 };
 
-const AddExerciseForm = ({ addExercise, loading }) => {
+const ExerciseForm = ({ onSubmit, loading, initValues }) => {
   const [values, setValues] = useState({
-    name: "",
-    label: "",
+    name: initValues?.name || "",
+    label: initValues?.label || "",
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await addExercise({ variables: values });
-    } catch (err) {
-      console.error(err.message);
-    }
+    onSubmit(values);
   };
 
   const handleChange = (e) =>
@@ -103,7 +169,7 @@ const AddExerciseForm = ({ addExercise, loading }) => {
           />
         </label>
         <Button variant="primary" type="submit">
-          Add New
+          Save
         </Button>
       </form>
     </React.Fragment>
@@ -132,29 +198,13 @@ export const Exercises = () => {
     },
   });
 
-  const [deleteExercise, { error: deleteError }] = useMutation(
-    DELETE_EXERICSE,
-    {
-      update(
-        cache,
-        {
-          data: { deleteOneexercise },
-        }
-      ) {
-        const { exercises: currentExercises } = cache.readQuery({
-          query: EXERCISES,
-        });
-        cache.writeQuery({
-          query: EXERCISES,
-          data: {
-            exercises: currentExercises.filter(
-              (exc) => exc.id !== deleteOneexercise.id
-            ),
-          },
-        });
-      },
+  const onAdd = async (values) => {
+    try {
+      await addExercise({ variables: values });
+    } catch (err) {
+      console.error(err.message);
     }
-  );
+  };
 
   if (loading) {
     return <p>{"Loading..."}</p>;
@@ -170,20 +220,20 @@ export const Exercises = () => {
       <h1>Exercises</h1>
       <ListGroup>
         {exercises.map((exc) => (
-          <Exercise
-            key={exc.id}
-            exercise={exc}
-            deleteExercise={deleteExercise}
-          />
+          <Exercise key={exc.id} exercise={exc} />
         ))}
       </ListGroup>
-      <AddExerciseForm
-        loadig={formLoading}
-        addExercise={addExercise}
-        className="mt-2"
-      />
+      <h4 className="mt-4">Add new</h4>
+      <ListGroup>
+        <ListGroup.Item>
+          <ExerciseForm
+            loadig={formLoading}
+            onSubmit={onAdd}
+            className="mt-2"
+          />
+        </ListGroup.Item>
+      </ListGroup>
       {submitError && <p>{submitError.message}</p>}
-      {deleteError && <p>{deleteError.message}</p>}
     </div>
   );
 };
