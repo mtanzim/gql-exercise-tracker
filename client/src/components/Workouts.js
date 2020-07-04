@@ -36,24 +36,135 @@ const MAKE_SESSION = gql`
   }
 `;
 
+const DELETE_ONE_SESSION = gql`
+  mutation DeleteOneSession($id: Int!) {
+    deleteOneexercise_session(where: { id: $id }) {
+      id
+    }
+  }
+`;
+
+const UPDATE_SESSION = gql`
+  mutation UpdateOneSession($id: Int!, $note: String) {
+    updateOneexercise_session(where: { id: $id }, data: { note: $note }) {
+      id
+      note
+      timestamp
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+`;
+
 const Sessions = ({ session }) => {
-  const { note, timestamp, user } = session;
+  const [delSession, { loading }] = useMutation(DELETE_ONE_SESSION, {
+    update(
+      cache,
+      {
+        data: { deleteOneexercise_session },
+      }
+    ) {
+      const { exerciseSessions: current } = cache.readQuery({
+        query: GET_SESSIONS,
+        variables: { userId: MOCK_USER_ID },
+      });
+      const updated = current.filter(
+        (s) => s.id !== deleteOneexercise_session.id
+      );
+      console.log(updated);
+      cache.writeQuery({
+        query: GET_SESSIONS,
+        variables: { userId: MOCK_USER_ID },
+        data: { exerciseSessions: updated },
+      });
+    },
+  });
+  const [updateSession, { loading: updateLoaing }] = useMutation(
+    UPDATE_SESSION
+  );
+
+  const [isEditing, setEditing] = useState(false);
+  const { note, timestamp, user, id } = session;
   const { name: userName } = user;
+
+  const onDelete = async () => {
+    try {
+      await delSession({ variables: { id } });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const onUpdate = async (values) => {
+    try {
+      await updateSession({ variables: { id, ...values } });
+      setEditing(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  if (isEditing) {
+    return (
+      <ListGroup.Item>
+        <SessionForm
+          isEditing
+          onUpdate={onUpdate}
+          initValues={{ name: "note", value: note }}
+        />
+      </ListGroup.Item>
+    );
+  }
 
   return (
     <ListGroup.Item>
       {note} - {userName} - {timestamp}
-      <Button className="ml-2" variant="primary">
+      <Button
+        onClick={() => setEditing(true)}
+        className="ml-2"
+        variant="primary"
+      >
         Edit
       </Button>
-      <Button className="ml-2" variant="danger">
+      <Button onClick={onDelete} className="ml-2" variant="danger">
         Delete
       </Button>
     </ListGroup.Item>
   );
 };
 
-const SessionForm = ({ initValues, onSubmit, loading }) => {
+const SessionForm = ({ initValues, isEditing, onUpdate }) => {
+  const [addSession, { loading }] = useMutation(MAKE_SESSION, {
+    update(
+      cache,
+      {
+        data: { createExerciseSession },
+      }
+    ) {
+      const { exerciseSessions: current } = cache.readQuery({
+        query: GET_SESSIONS,
+        variables: { userId: MOCK_USER_ID },
+      });
+      const updated = current.concat([createExerciseSession]);
+      console.log(updated);
+      cache.writeQuery({
+        query: GET_SESSIONS,
+        variables: { userId: MOCK_USER_ID },
+        data: { exerciseSessions: updated },
+      });
+    },
+  });
+
+  const onAdd = async (values) => {
+    try {
+      await addSession({ variables: { ...values, userId: MOCK_USER_ID } });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   const [values, setValues] = useState({
     name: initValues?.name || "",
     label: initValues?.label || "",
@@ -61,7 +172,10 @@ const SessionForm = ({ initValues, onSubmit, loading }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(values);
+    if (isEditing) {
+      return onUpdate(values);
+    }
+    return onAdd(values);
   };
 
   const handleChange = (e) =>
@@ -96,37 +210,6 @@ export const Workouts = () => {
     variables: { userId: MOCK_USER_ID },
   });
 
-  const [addSession, { loading: formLoaing }] = useMutation(MAKE_SESSION, {
-    update(
-      cache,
-      {
-        data: { createExerciseSession },
-      }
-    ) {
-      const { exerciseSessions: current } = cache.readQuery({
-        query: GET_SESSIONS,
-        variables: { userId: MOCK_USER_ID },
-      });
-      console.log(current);
-      console.log(createExerciseSession);
-      const updated = current.concat([createExerciseSession]);
-      console.log(updated);
-      cache.writeQuery({
-        query: GET_SESSIONS,
-        variables: { userId: MOCK_USER_ID },
-        data: { exerciseSessions: updated },
-      });
-    },
-  });
-
-  const onAdd = async (values) => {
-    try {
-      await addSession({ variables: { ...values, userId: MOCK_USER_ID } });
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
   if (loading) {
     return <p>{"Loading..."}</p>;
   }
@@ -147,7 +230,7 @@ export const Workouts = () => {
       <h4 className="mt-4">Add new</h4>
       <ListGroup>
         <ListGroup.Item>
-          <SessionForm onSubmit={onAdd} loading={formLoaing} />
+          <SessionForm />
         </ListGroup.Item>
       </ListGroup>
     </div>

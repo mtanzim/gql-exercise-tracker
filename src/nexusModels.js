@@ -53,6 +53,7 @@ const Mutation = objectType({
     t.crud.deleteOneexercise({});
     t.crud.deleteManyexercise_instance({});
     t.crud.deleteManyexercise_session({});
+    t.crud.deleteOneexercise_session({});
     // auto-gen updates
     t.crud.updateOneuser({});
     t.crud.updateOneexercise({});

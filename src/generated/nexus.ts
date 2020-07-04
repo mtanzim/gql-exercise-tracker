@@ -501,6 +501,7 @@ export interface NexusGenFieldTypes {
     deleteManyexercise_instance: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteManyexercise_session: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteOneexercise: NexusGenRootTypes['exercise'] | null; // exercise
+    deleteOneexercise_session: NexusGenRootTypes['exercise_session'] | null; // exercise_session
     deleteOneuser: NexusGenRootTypes['user'] | null; // user
     signupUser: NexusGenRootTypes['user']; // user!
     updateOneexercise: NexusGenRootTypes['exercise'] | null; // exercise
@@ -566,6 +567,9 @@ export interface NexusGenArgTypes {
     }
     deleteOneexercise: { // args
       where: NexusGenInputs['exerciseWhereUniqueInput']; // exerciseWhereUniqueInput!
+    }
+    deleteOneexercise_session: { // args
+      where: NexusGenInputs['exercise_sessionWhereUniqueInput']; // exercise_sessionWhereUniqueInput!
     }
     deleteOneuser: { // args
       where: NexusGenInputs['userWhereUniqueInput']; // userWhereUniqueInput!

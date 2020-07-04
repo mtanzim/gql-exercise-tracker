@@ -355,6 +355,7 @@ type Mutation {
   deleteManyexercise_instance(where: exercise_instanceWhereInput): BatchPayload!
   deleteManyexercise_session(where: exercise_sessionWhereInput): BatchPayload!
   deleteOneexercise(where: exerciseWhereUniqueInput!): exercise
+  deleteOneexercise_session(where: exercise_sessionWhereUniqueInput!): exercise_session
   deleteOneuser(where: userWhereUniqueInput!): user
   signupUser(email: String, name: String): user!
   updateOneexercise(data: exerciseUpdateInput!, where: exerciseWhereUniqueInput!): exercise
