@@ -112,7 +112,7 @@ const Sessions = ({ session }) => {
         <SessionForm
           isEditing
           onUpdate={onUpdate}
-          initValues={{ name: "note", value: note }}
+          initValues={session}
         />
       </ListGroup.Item>
     );
@@ -166,8 +166,7 @@ const SessionForm = ({ initValues, isEditing, onUpdate }) => {
   };
 
   const [values, setValues] = useState({
-    name: initValues?.name || "",
-    label: initValues?.label || "",
+    note: initValues?.note || "",
   });
 
   const handleSubmit = (e) => {
