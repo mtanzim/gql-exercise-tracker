@@ -3,6 +3,7 @@ const {
   stringArg,
   intArg,
   floatArg,
+  queryType,
 } = require("@nexus/schema");
 
 const User = objectType({
@@ -145,9 +146,9 @@ const Mutation = objectType({
   },
 });
 
-const Query = objectType({
-  name: "Query",
+const Query = queryType({
   definition(t) {
+    // t.crud().exercise_session()
     t.list.field("users", {
       type: "user",
       resolve: (_, _args, ctx) => {
@@ -163,8 +164,13 @@ const Query = objectType({
 
     t.list.field("exerciseSessions", {
       type: "exercise_session",
-      resolve: (_, _args, ctx) => {
-        return ctx.prisma.exercise_session.findMany();
+      args: {
+        userId: intArg({ required: true }),
+      },
+      resolve: (_, { userId }, ctx) => {
+        return ctx.prisma.exercise_session.findMany({
+          where: { userId },
+        });
       },
     });
     t.list.field("exerciseInstances", {

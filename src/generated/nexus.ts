@@ -591,6 +591,11 @@ export interface NexusGenArgTypes {
       where: NexusGenInputs['userWhereUniqueInput']; // userWhereUniqueInput!
     }
   }
+  Query: {
+    exerciseSessions: { // args
+      userId: number; // Int!
+    }
+  }
   exercise_session: {
     exercise_instance: { // args
       after?: NexusGenInputs['exercise_instanceWhereUniqueInput'] | null; // exercise_instanceWhereUniqueInput
