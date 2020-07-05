@@ -9,8 +9,8 @@ export const ExerciseInstances = ({ data }) => {
         const { exercise } = excInstance;
         return (
           <li>
-            {exercise.name} - {exercise.label} - {excInstance.weight} kg -{" "}
-            {excInstance.repetitions}x
+            {exercise.name} - {exercise.label} - {excInstance.weight} kg - {" "}
+            {excInstance.repetitions}x for {excInstance.duration} seconds
           </li>
         );
       })}

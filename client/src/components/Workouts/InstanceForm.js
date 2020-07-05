@@ -85,6 +85,7 @@ export const InstanceForm = ({ initValues, sessionId }) => {
           value={values.exerciseId}
           onChange={handleChange}
         >
+          <option value={null} />
           {exercises.map((exc) => (
             <option value={exc.id}>
               {exc.name} - {exc.label}
