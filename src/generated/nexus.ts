@@ -596,6 +596,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    exerciseInstances: { // args
+      sessionId: number; // Int!
+    }
     exerciseSessions: { // args
       userId: number; // Int!
     }

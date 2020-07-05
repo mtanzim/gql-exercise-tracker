@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -7,9 +7,11 @@ import {
   GET_SESSIONS,
   MOCK_USER_ID,
   UPDATE_SESSION,
+  GET_INSTANCES,
 } from "./api";
 import { SessionForm } from "./SessionForm";
 import { InstanceForm } from "./InstanceForm";
+import { ExerciseInstances } from "./ExerciseInstances";
 
 export const Sessions = ({ session }) => {
   const [delSession, { loading }] = useMutation(DELETE_ONE_SESSION, {
@@ -41,6 +43,11 @@ export const Sessions = ({ session }) => {
   const [isActive, setActive] = useState(false);
   const { note, timestamp, user, id } = session;
   const { name: userName } = user;
+
+  const { data: instanceData, loading: instancesLoading } = useQuery(
+    GET_INSTANCES,
+    { variables: { sessionId: id } }
+  );
 
   const onDelete = async () => {
     try {
@@ -87,6 +94,11 @@ export const Sessions = ({ session }) => {
         Delete
       </Button>
       {isActive && <InstanceForm sessionId={id} />}
+      {instancesLoading ? (
+        "Loading instances"
+      ) : (
+        <ExerciseInstances data={instanceData} />
+      )}
     </ListGroup.Item>
   );
 };

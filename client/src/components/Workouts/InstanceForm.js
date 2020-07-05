@@ -2,7 +2,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { EXERCISES } from "../Exercises/api";
-import { CREATE_EXERCISE_INSTANCE } from "./api";
+import { CREATE_EXERCISE_INSTANCE, GET_INSTANCES } from "./api";
 
 export const InstanceForm = ({ initValues, sessionId }) => {
   const { loading, error, data } = useQuery(EXERCISES);
@@ -10,7 +10,25 @@ export const InstanceForm = ({ initValues, sessionId }) => {
   const [
     addExerciseInstance,
     { loading: formLoading, error: submitError },
-  ] = useMutation(CREATE_EXERCISE_INSTANCE);
+  ] = useMutation(CREATE_EXERCISE_INSTANCE, {
+    update(
+      cache,
+      {
+        data: { createExerciseInstance },
+      }
+    ) {
+      const { exerciseInstances: current } = cache.readQuery({
+        query: GET_INSTANCES,
+        variables: { sessionId },
+      });
+      const updated = current.concat([createExerciseInstance]);
+      cache.writeQuery({
+        query: GET_INSTANCES,
+        variables: { sessionId },
+        data: { exerciseInstances: updated },
+      });
+    },
+  });
 
   const [values, setValues] = useState({
     exerciseId: initValues?.exerciseId || "",
@@ -42,10 +60,9 @@ export const InstanceForm = ({ initValues, sessionId }) => {
     }, {});
     console.log(JSON.stringify(submitValues));
     try {
-      const res = await addExerciseInstance({
+      await addExerciseInstance({
         variables: { sessionId, ...submitValues },
       });
-      alert(JSON.stringify(res));
     } catch (err) {
       console.error(err.message);
     }
@@ -60,57 +77,54 @@ export const InstanceForm = ({ initValues, sessionId }) => {
   const { exercises } = data;
 
   return (
-    <>
-      <p>{JSON.stringify(exercises)}</p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Exercises
-          <select
-            name="exerciseId"
-            value={values.exerciseId}
-            onChange={handleChange}
-          >
-            {exercises.map((exc) => (
-              <option value={exc.id}>
-                {exc.name} - {exc.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Weight
-          <input
-            className="ml-2 mr-2"
-            type="text"
-            name="weight"
-            value={values.weight}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Repetitions
-          <input
-            className="ml-2 mr-2"
-            type="text"
-            name="repetitions"
-            value={values.repetitions}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Duration
-          <input
-            className="ml-2 mr-2"
-            type="text"
-            name="duration"
-            value={values.duration}
-            onChange={handleChange}
-          />
-        </label>
-        <Button variant="primary" type="submit">
-          Add
-        </Button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Exercises
+        <select
+          name="exerciseId"
+          value={values.exerciseId}
+          onChange={handleChange}
+        >
+          {exercises.map((exc) => (
+            <option value={exc.id}>
+              {exc.name} - {exc.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Weight
+        <input
+          className="ml-2 mr-2"
+          type="text"
+          name="weight"
+          value={values.weight}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Repetitions
+        <input
+          className="ml-2 mr-2"
+          type="text"
+          name="repetitions"
+          value={values.repetitions}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Duration
+        <input
+          className="ml-2 mr-2"
+          type="text"
+          name="duration"
+          value={values.duration}
+          onChange={handleChange}
+        />
+      </label>
+      <Button variant="primary" type="submit">
+        Add
+      </Button>
+    </form>
   );
 };

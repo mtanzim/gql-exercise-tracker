@@ -176,8 +176,15 @@ const Query = queryType({
     });
     t.list.field("exerciseInstances", {
       type: "exercise_instance",
-      resolve: (_, _args, ctx) => {
-        return ctx.prisma.exercise_instance.findMany();
+      args: {
+        sessionId: intArg({ required: true }),
+      },
+      resolve: (_, { sessionId }, ctx) => {
+        return ctx.prisma.exercise_instance.findMany({
+          where: {
+            sessionId,
+          },
+        });
       },
     });
   },

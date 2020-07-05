@@ -78,6 +78,47 @@ export const CREATE_EXERCISE_INSTANCE = gql`
         name
         label
       }
+      exercise_session {
+        id
+        note
+        timestamp
+      }
+      exercise_session {
+        id
+        timestamp
+        user {
+          id
+          email
+        }
+      }
+    }
+  }
+`;
+
+export const GET_INSTANCES = gql`
+  query GetInstances($sessionId: Int!) {
+    exerciseInstances(sessionId: $sessionId) {
+      id
+      weight
+      duration
+      repetitions
+      exercise {
+        name
+        label
+      }
+      exercise_session {
+        id
+        note
+        timestamp
+      }
+      exercise_session {
+        id
+        timestamp
+        user {
+          id
+          email
+        }
+      }
     }
   }
 `;

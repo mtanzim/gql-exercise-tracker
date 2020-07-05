@@ -412,7 +412,7 @@ input NullableStringFilter {
 }
 
 type Query {
-  exerciseInstances: [exercise_instance!]!
+  exerciseInstances(sessionId: Int!): [exercise_instance!]!
   exercises: [exercise!]!
   exerciseSessions(userId: Int!): [exercise_session!]!
   users: [user!]!
