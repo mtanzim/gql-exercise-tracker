@@ -5,7 +5,7 @@ import { Exercises } from "./components/Exercises/Exercises";
 import { Forum } from "./components/Forum";
 import { Home } from "./components/Home";
 import { Navigation } from "./components/Navigation";
-import { Workouts } from "./components/Workouts";
+import { Workouts } from "./components/Workouts/Workouts";
 
 function App() {
   return (
