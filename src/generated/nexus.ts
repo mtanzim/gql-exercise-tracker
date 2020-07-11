@@ -355,12 +355,14 @@ export interface NexusGenInputs {
   userCreateWithoutExercise_sessionInput: { // input type
     email: string; // String!
     name?: string | null; // String
+    password: string; // String!
   }
   userUpdateInput: { // input type
     email?: string | null; // String
     exercise_session?: NexusGenInputs['exercise_sessionUpdateManyWithoutUserInput'] | null; // exercise_sessionUpdateManyWithoutUserInput
     id?: number | null; // Int
     name?: string | null; // String
+    password?: string | null; // String
   }
   userUpdateOneRequiredWithoutExercise_sessionInput: { // input type
     connect?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
@@ -372,6 +374,7 @@ export interface NexusGenInputs {
     email?: string | null; // String
     id?: number | null; // Int
     name?: string | null; // String
+    password?: string | null; // String
   }
   userUpsertWithoutExercise_sessionInput: { // input type
     create: NexusGenInputs['userCreateWithoutExercise_sessionInput']; // userCreateWithoutExercise_sessionInput!
@@ -385,6 +388,7 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     NOT?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
     OR?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    password?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   userWhereUniqueInput: { // input type
     email?: string | null; // String
@@ -577,6 +581,7 @@ export interface NexusGenArgTypes {
     signupUser: { // args
       email?: string | null; // String
       name?: string | null; // String
+      password?: string | null; // String
     }
     updateOneexercise: { // args
       data: NexusGenInputs['exerciseUpdateInput']; // exerciseUpdateInput!

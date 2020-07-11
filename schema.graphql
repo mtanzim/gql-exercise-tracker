@@ -357,7 +357,7 @@ type Mutation {
   deleteOneexercise(where: exerciseWhereUniqueInput!): exercise
   deleteOneexercise_session(where: exercise_sessionWhereUniqueInput!): exercise_session
   deleteOneuser(where: userWhereUniqueInput!): user
-  signupUser(email: String, name: String): user!
+  signupUser(email: String, name: String, password: String): user!
   updateOneexercise(data: exerciseUpdateInput!, where: exerciseWhereUniqueInput!): exercise
   updateOneexercise_instance(data: exercise_instanceUpdateInput!, where: exercise_instanceWhereUniqueInput!): exercise_instance
   updateOneexercise_session(data: exercise_sessionUpdateInput!, where: exercise_sessionWhereUniqueInput!): exercise_session
@@ -446,6 +446,7 @@ input userCreateOneWithoutExercise_sessionInput {
 input userCreateWithoutExercise_sessionInput {
   email: String!
   name: String
+  password: String!
 }
 
 input userUpdateInput {
@@ -453,6 +454,7 @@ input userUpdateInput {
   exercise_session: exercise_sessionUpdateManyWithoutUserInput
   id: Int
   name: String
+  password: String
 }
 
 input userUpdateOneRequiredWithoutExercise_sessionInput {
@@ -466,6 +468,7 @@ input userUpdateWithoutExercise_sessionDataInput {
   email: String
   id: Int
   name: String
+  password: String
 }
 
 input userUpsertWithoutExercise_sessionInput {
@@ -481,6 +484,7 @@ input userWhereInput {
   name: NullableStringFilter
   NOT: [userWhereInput!]
   OR: [userWhereInput!]
+  password: StringFilter
 }
 
 input userWhereUniqueInput {

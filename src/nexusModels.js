@@ -6,6 +6,17 @@ const {
   queryType,
 } = require("@nexus/schema");
 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const hashPassowrd = (password) =>
+  new Promise((resolve, reject) =>
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      if (err) {
+        reject(err);
+      }
+      return resolve(hash);
+    })
+  );
 const User = objectType({
   name: "user",
   definition(t) {
@@ -64,13 +75,16 @@ const Mutation = objectType({
       type: "user",
       args: {
         email: stringArg(),
+        password: stringArg(),
         name: stringArg({ nullable: true }),
       },
-      resolve: (_, { name, email }, ctx, _info) => {
+      resolve: async (_, { name, email, password }, ctx, _info) => {
+        const passwordHashed = await hashPassowrd(password);
         return ctx.prisma.user.create({
           data: {
             name,
             email,
+            password: passwordHashed,
           },
         });
       },
