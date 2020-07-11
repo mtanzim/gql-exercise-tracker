@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type auth {
+  token: String!
+  user: user!
+}
+
 type BatchPayload {
   count: Int!
 }
@@ -357,7 +362,8 @@ type Mutation {
   deleteOneexercise(where: exerciseWhereUniqueInput!): exercise
   deleteOneexercise_session(where: exercise_sessionWhereUniqueInput!): exercise_session
   deleteOneuser(where: userWhereUniqueInput!): user
-  signupUser(email: String, name: String, password: String): user!
+  loginUser(email: String, password: String): auth!
+  signupUser(email: String, name: String, password: String): auth!
   updateOneexercise(data: exerciseUpdateInput!, where: exerciseWhereUniqueInput!): exercise
   updateOneexercise_instance(data: exercise_instanceUpdateInput!, where: exercise_instanceWhereUniqueInput!): exercise_instance
   updateOneexercise_session(data: exercise_sessionUpdateInput!, where: exercise_sessionWhereUniqueInput!): exercise_session

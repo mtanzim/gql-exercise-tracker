@@ -4,6 +4,7 @@ const { makeSchema } = require("@nexus/schema");
 const { nexusPrismaPlugin } = require("nexus-prisma");
 const {
   User,
+  AuthPayload,
   Exercise,
   ExerciseSession,
   ExerciseInstance,
@@ -17,6 +18,7 @@ const server = new GraphQLServer({
   schema: makeSchema({
     types: [
       User,
+      AuthPayload,
       Exercise,
       ExerciseSession,
       ExerciseInstance,

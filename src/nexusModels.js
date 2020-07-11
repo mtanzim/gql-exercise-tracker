@@ -5,18 +5,8 @@ const {
   floatArg,
   queryType,
 } = require("@nexus/schema");
+const { hashPassword, comparePassword, signToken } = require("./utils");
 
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-const hashPassowrd = (password) =>
-  new Promise((resolve, reject) =>
-    bcrypt.hash(password, saltRounds, function(err, hash) {
-      if (err) {
-        reject(err);
-      }
-      return resolve(hash);
-    })
-  );
 const User = objectType({
   name: "user",
   definition(t) {
@@ -25,6 +15,14 @@ const User = objectType({
     t.model.email();
   },
 });
+const AuthPayload = objectType({
+  name: "auth",
+  definition(t) {
+    t.string("token");
+    t.field("user", { type: "user" });
+  },
+});
+
 const Exercise = objectType({
   name: "exercise",
   definition(t) {
@@ -72,23 +70,57 @@ const Mutation = objectType({
     t.crud.updateOneexercise_session({});
 
     t.field("signupUser", {
-      type: "user",
+      type: "auth",
       args: {
         email: stringArg(),
         password: stringArg(),
         name: stringArg({ nullable: true }),
       },
       resolve: async (_, { name, email, password }, ctx, _info) => {
-        const passwordHashed = await hashPassowrd(password);
-        return ctx.prisma.user.create({
+        const passwordHashed = await hashPassword(password);
+        const user = await ctx.prisma.user.create({
           data: {
             name,
             email,
             password: passwordHashed,
           },
         });
+        console.log(user);
+        const token = signToken(user.id);
+        return {
+          user,
+          token,
+        };
       },
     });
+
+    t.field("loginUser", {
+      type: "auth",
+      args: {
+        email: stringArg(),
+        password: stringArg(),
+      },
+      resolve: async (_, { email, password }, ctx, _info) => {
+        const user = await ctx.prisma.user.findOne({
+          where: {
+            email,
+          },
+        });
+        if (!user) {
+          throw new Error("Invalid auth");
+        }
+        const isValid = await comparePassword(password, user.password);
+        if (!isValid) {
+          throw new Error("Invalid auth");
+        }
+        const token = signToken(user.id);
+        return {
+          user,
+          token,
+        };
+      },
+    });
+
     t.field("createExercise", {
       type: "exercise",
       args: {
@@ -206,6 +238,7 @@ const Query = queryType({
 
 module.exports = {
   User,
+  AuthPayload,
   Exercise,
   ExerciseSession,
   ExerciseInstance,
