@@ -75,13 +75,9 @@ export const CREATE_EXERCISE_INSTANCE = gql`
       duration
       repetitions
       exercise {
+        id
         name
         label
-      }
-      exercise_session {
-        id
-        note
-        timestamp
       }
       exercise_session {
         id
@@ -103,13 +99,9 @@ export const GET_INSTANCES = gql`
       duration
       repetitions
       exercise {
+        id
         name
         label
-      }
-      exercise_session {
-        id
-        note
-        timestamp
       }
       exercise_session {
         id

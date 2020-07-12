@@ -75,30 +75,36 @@ export const Sessions = ({ session }) => {
 
   return (
     <ListGroup.Item>
-      {note} - {userName} - {timestamp}
-      <Button
-        onClick={() => setActive((cur) => !cur)}
-        className="ml-2"
-        variant="success"
-      >
-        {isActive ? "Complete" : "Start"}
-      </Button>
-      <Button
-        onClick={() => setEditing(true)}
-        className="ml-2"
-        variant="primary"
-      >
-        Edit
-      </Button>
-      <Button onClick={onDelete} className="ml-2" variant="danger">
-        Delete
-      </Button>
-      {isActive && <InstanceForm sessionId={id} />}
-      {instancesLoading ? (
-        "Loading instances"
-      ) : (
-        <ExerciseInstances data={instanceData} />
-      )}
+      <h3>{note}</h3>
+      <code>{userName}</code>
+      <p>{timestamp}</p>
+      <div className="mb-2">
+        <Button
+          onClick={() => setActive((cur) => !cur)}
+          className="ml-2"
+          variant="success"
+        >
+          {isActive ? "Complete" : "Start"}
+        </Button>
+        <Button
+          onClick={() => setEditing(true)}
+          className="ml-2"
+          variant="primary"
+        >
+          Edit
+        </Button>
+        <Button onClick={onDelete} className="ml-2" variant="danger">
+          Delete
+        </Button>
+      </div>
+      <div className="mt-4">
+        {isActive && <InstanceForm sessionId={id} />}
+        {instancesLoading ? (
+          "Loading instances"
+        ) : (
+          <ExerciseInstances isActive={isActive} data={instanceData} />
+        )}
+      </div>
     </ListGroup.Item>
   );
 };

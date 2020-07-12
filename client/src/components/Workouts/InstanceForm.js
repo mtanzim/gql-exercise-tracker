@@ -39,7 +39,6 @@ export const InstanceForm = ({ initValues, sessionId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(values));
     const submitValues = Object.keys(values).reduce((prev, cur) => {
       switch (cur) {
         case "exerciseId":
@@ -87,7 +86,7 @@ export const InstanceForm = ({ initValues, sessionId }) => {
         >
           <option value={null} />
           {exercises.map((exc) => (
-            <option value={exc.id}>
+            <option key={exc.id} value={exc.id}>
               {exc.name} - {exc.label}
             </option>
           ))}
