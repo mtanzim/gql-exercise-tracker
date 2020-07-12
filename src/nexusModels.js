@@ -61,6 +61,7 @@ const Mutation = objectType({
     t.crud.deleteOneuser({});
     t.crud.deleteOneexercise({});
     t.crud.deleteManyexercise_instance({});
+    t.crud.deleteOneexercise_instance({});
     t.crud.deleteManyexercise_session({});
     t.crud.deleteOneexercise_session({});
     // auto-gen updates
@@ -195,7 +196,6 @@ const Mutation = objectType({
 
 const Query = queryType({
   definition(t) {
-    // t.crud().exercise_session()
     t.list.field("users", {
       type: "user",
       resolve: (_, _args, ctx) => {

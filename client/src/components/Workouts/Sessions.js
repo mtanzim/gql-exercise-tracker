@@ -4,14 +4,14 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import {
   DELETE_ONE_SESSION,
+  GET_INSTANCES,
   GET_SESSIONS,
   MOCK_USER_ID,
   UPDATE_SESSION,
-  GET_INSTANCES,
 } from "./api";
-import { SessionForm } from "./SessionForm";
-import { InstanceForm } from "./InstanceForm";
 import { ExerciseInstances } from "./ExerciseInstances";
+import { InstanceForm } from "./InstanceForm";
+import { SessionForm } from "./SessionForm";
 
 export const Sessions = ({ session }) => {
   const [delSession, { loading }] = useMutation(DELETE_ONE_SESSION, {
