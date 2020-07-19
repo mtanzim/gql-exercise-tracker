@@ -116,12 +116,9 @@ export const GET_INSTANCES = gql`
 `;
 
 export const DELETE_INSTANCE = gql`
-    mutation DeleteExerciseInstance($id: Int!) {
-      deleteOneexercise_instance(where : {
-        id: $id
-      }) {
-        id
-      }
+  mutation DeleteExerciseInstances($id: Int!) {
+    deleteOneexercise_instance(where: { id: $id }) {
+      id
     }
   }
 `;
