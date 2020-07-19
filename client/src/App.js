@@ -4,8 +4,10 @@ import { Route, Switch } from "react-router-dom";
 import { Exercises } from "./components/Exercises/Exercises";
 import { Forum } from "./components/Forum";
 import { Home } from "./components/Home";
+import { Login } from "./components/Login";
 import { Navigation } from "./components/Navigation";
 import { Workouts } from "./components/Workouts/Workouts";
+
 
 function App() {
   return (
@@ -14,6 +16,9 @@ function App() {
       <Switch>
         <Route path="/exercises">
           <Exercises />
+        </Route>        
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/workouts">
           <Workouts />
