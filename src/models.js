@@ -230,9 +230,14 @@ const Query = queryType({
         sessionId: intArg({ required: true }),
       },
       resolve: (_, { sessionId }, ctx) => {
+        const userId = getUserId(ctx);
+
         return ctx.prisma.exercise_instance.findMany({
           where: {
             sessionId,
+            exercise_session: {
+              userId,
+            },
           },
         });
       },
