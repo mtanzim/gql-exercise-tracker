@@ -1,16 +1,13 @@
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { EXERCISES } from "../Exercises/api";
 import { CREATE_EXERCISE_INSTANCE, GET_INSTANCES } from "./api";
 
 export const InstanceForm = ({ initValues, sessionId }) => {
-  const { loading, error, data } = useQuery(EXERCISES);
+  const { loading, data } = useQuery(EXERCISES);
 
-  const [
-    addExerciseInstance,
-    { loading: formLoading, error: submitError },
-  ] = useMutation(CREATE_EXERCISE_INSTANCE, {
+  const [addExerciseInstance] = useMutation(CREATE_EXERCISE_INSTANCE, {
     update(
       cache,
       {

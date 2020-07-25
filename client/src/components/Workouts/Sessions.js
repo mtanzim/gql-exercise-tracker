@@ -14,7 +14,7 @@ import { InstanceForm } from "./InstanceForm";
 import { SessionForm } from "./SessionForm";
 
 export const Sessions = ({ session }) => {
-  const [delSession, { loading }] = useMutation(DELETE_ONE_SESSION, {
+  const [delSession] = useMutation(DELETE_ONE_SESSION, {
     update(
       cache,
       {
@@ -35,9 +35,7 @@ export const Sessions = ({ session }) => {
       });
     },
   });
-  const [updateSession, { loading: updateLoaing }] = useMutation(
-    UPDATE_SESSION
-  );
+  const [updateSession] = useMutation(UPDATE_SESSION);
 
   const [isEditing, setEditing] = useState(false);
   const [isActive, setActive] = useState(false);

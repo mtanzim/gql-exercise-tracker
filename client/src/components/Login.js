@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
+import React, { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { REGISTER } from "./api";
-import { createContext } from "vm";
+import { useHistory, Redirect } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
+import { LOGIN, REGISTER } from "./api";
 
-export const AUTH_TOKEN = "exercise-auth-token";
 export const Login = () => {
+  const authValue = useContext(AuthContext);
+  const history = useHistory();
+
   const formStructure = [
     { name: "name", label: "Name", defaultValue: "", type: "text" },
     { name: "email", label: "Email", defaultValue: "", type: "text" },
@@ -24,38 +27,60 @@ export const Login = () => {
       return prev;
     }, {});
 
-  const [register, { loading, error, data }] = useMutation(REGISTER);
-
+  const [
+    register,
+    { loading: registerLoading, error: registerError },
+  ] = useMutation(REGISTER);
+  const [login, { loading: loginLoading, error: loginError }] = useMutation(
+    LOGIN
+  );
   const [values, setValues] = useState(getDefaultValues());
-
   const [isRegister, setRegister] = useState(false);
+
+  const getLoginData = async () => {
+    if (isRegister) {
+      const {
+        data: { signupUser },
+      } = await register({ variables: values });
+      return signupUser;
+    }
+    const {
+      data: { loginUser },
+    } = await login({ variables: values });
+    return loginUser;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isRegister) {
-      alert(JSON.stringify(values));
-      try {
-        const {
-          data: { signupUser },
-        } = await register({ variables: values });
-        const { token, user } = signupUser;
-        console.log({ token, user });
-        localStorage.setItem(AUTH_TOKEN, token);
-      } catch (err) {
-        console.error(err);
-      }
 
+    try {
+      const { token, user } = await getLoginData();
+      console.log({ token, user });
+      authValue.login(user, token);
       setValues(getDefaultValues());
+      history.push("/");
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
+
+  if (authValue?.authState?.authenticated) {
+    return <Redirect to="/" />;
+  }
+
+  if (registerLoading || loginLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <React.Fragment>
       <form className="mt-2" onSubmit={handleSubmit}>
         {formStructure
-          .filter((k) => (!isRegister ? k.name !== "verifyPassword" : true))
+          .filter((k) => isRegister || k.name !== "verifyPassword")
+          .filter((k) => isRegister || k.name !== "name")
           .map((k) => (
             <label key={k.name}>
               {k.label}
@@ -73,6 +98,7 @@ export const Login = () => {
           {isRegister ? "Register" : "Login"}
         </Button>
       </form>
+      {/*eslint-disable-next-line*/}
       <a
         href="#"
         onClick={() => {
@@ -82,7 +108,8 @@ export const Login = () => {
       >
         {isRegister ? "Login instead" : "Register instead"}
       </a>
-      {error && <p>{error.message}</p>}
+      {registerError && <p>{registerError.message}</p>}
+      {loginError && <p>{loginError.message}</p>}
     </React.Fragment>
   );
 };
