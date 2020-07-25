@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { GET_SESSIONS, MAKE_SESSION, MOCK_USER_ID } from "./api";
+import { GET_SESSIONS, MAKE_SESSION } from "./api";
 
 export const SessionForm = ({ initValues, isEditing, onUpdate }) => {
   const [addSession, { loading }] = useMutation(MAKE_SESSION, {
@@ -13,13 +13,11 @@ export const SessionForm = ({ initValues, isEditing, onUpdate }) => {
     ) {
       const { exerciseSessions: current } = cache.readQuery({
         query: GET_SESSIONS,
-        variables: { userId: MOCK_USER_ID },
       });
       const updated = current.concat([createExerciseSession]);
       console.log(updated);
       cache.writeQuery({
         query: GET_SESSIONS,
-        variables: { userId: MOCK_USER_ID },
         data: { exerciseSessions: updated },
       });
     },
@@ -27,7 +25,7 @@ export const SessionForm = ({ initValues, isEditing, onUpdate }) => {
 
   const onAdd = async (values) => {
     try {
-      await addSession({ variables: { ...values, userId: MOCK_USER_ID } });
+      await addSession({ variables: values });
     } catch (err) {
       console.error(err.message);
     }

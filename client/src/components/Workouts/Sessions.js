@@ -6,7 +6,6 @@ import {
   DELETE_ONE_SESSION,
   GET_INSTANCES,
   GET_SESSIONS,
-  MOCK_USER_ID,
   UPDATE_SESSION,
 } from "./api";
 import { ExerciseInstances } from "./ExerciseInstances";
@@ -23,14 +22,12 @@ export const Sessions = ({ session }) => {
     ) {
       const { exerciseSessions: current } = cache.readQuery({
         query: GET_SESSIONS,
-        variables: { userId: MOCK_USER_ID },
       });
       const updated = current.filter(
         (s) => s.id !== deleteOneexercise_session.id
       );
       cache.writeQuery({
         query: GET_SESSIONS,
-        variables: { userId: MOCK_USER_ID },
         data: { exerciseSessions: updated },
       });
     },

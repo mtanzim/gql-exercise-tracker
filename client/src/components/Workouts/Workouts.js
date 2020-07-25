@@ -1,14 +1,12 @@
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import { GET_SESSIONS, MOCK_USER_ID } from "./api";
+import { GET_SESSIONS } from "./api";
 import { Sessions } from "./Sessions";
 import { SessionForm } from "./SessionForm";
 
 export const Workouts = () => {
-  const { loading, error, data } = useQuery(GET_SESSIONS, {
-    variables: { userId: MOCK_USER_ID },
-  });
+  const { loading, error, data } = useQuery(GET_SESSIONS, {});
 
   if (loading) {
     return <p>{"Loading..."}</p>;

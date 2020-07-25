@@ -5,12 +5,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
+import { AUTH_INFO } from "./AuthContext";
 import * as serviceWorker from "./serviceWorker";
 
 const API_ENDPOINT = "http://localhost:4000";
 
 const client = new ApolloClient({
   uri: API_ENDPOINT,
+  request: (operation) => {
+    const { token } = JSON.parse(localStorage.getItem(AUTH_INFO));
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
 });
 
 ReactDOM.render(

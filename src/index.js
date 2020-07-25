@@ -10,7 +10,7 @@ const {
   ExerciseInstance,
   Query,
   Mutation,
-} = require("./nexusModels");
+} = require("./models");
 
 const prisma = new PrismaClient();
 
@@ -31,6 +31,6 @@ const server = new GraphQLServer({
       typegen: __dirname + "/generated/nexus.ts",
     },
   }),
-  context: { prisma },
+  context: (request) => ({ ...request, prisma }),
 });
 server.start(() => console.log(`Server is running on http://localhost:4000`));

@@ -1,10 +1,9 @@
 import { gql } from "apollo-boost";
 
-export const MOCK_USER_ID = 1;
 
 export const GET_SESSIONS = gql`
-  query GetSessions($userId: Int!) {
-    exerciseSessions(userId: $userId) {
+  query GetSessions {
+    exerciseSessions {
       id
       note
       timestamp
@@ -18,8 +17,8 @@ export const GET_SESSIONS = gql`
 `;
 
 export const MAKE_SESSION = gql`
-  mutation CreateExerciseSession($userId: Int!, $note: String) {
-    createExerciseSession(userId: $userId, note: $note) {
+  mutation CreateExerciseSession($note: String) {
+    createExerciseSession(note: $note) {
       id
       note
       timestamp

@@ -18,7 +18,7 @@ export const Navigation = () => {
       <Nav variant="tabs">
         <Nav.Item>
           <code className="mr-2">{user.email}</code>
-          <i onClick={logoutAndRedirect} class="fa fa-sign-out" />
+          <i onClick={logoutAndRedirect} className="fa fa-sign-out" />
         </Nav.Item>
         <Nav.Item className="mr-2 ml-4">
           <Link to="/">Home</Link>

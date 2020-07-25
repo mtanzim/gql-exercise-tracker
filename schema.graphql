@@ -356,7 +356,7 @@ input IntFilter {
 type Mutation {
   createExercise(label: String, name: String): exercise!
   createExerciseInstance(duration: Float, exerciseId: Int!, repetitions: Int, sessionId: Int!, weight: Float): exercise_instance!
-  createExerciseSession(note: String, userId: Int!): exercise_session!
+  createExerciseSession(note: String): exercise_session!
   deleteManyexercise_instance(where: exercise_instanceWhereInput): BatchPayload!
   deleteManyexercise_session(where: exercise_sessionWhereInput): BatchPayload!
   deleteOneexercise(where: exerciseWhereUniqueInput!): exercise
@@ -421,7 +421,7 @@ input NullableStringFilter {
 type Query {
   exerciseInstances(sessionId: Int!): [exercise_instance!]!
   exercises: [exercise!]!
-  exerciseSessions(userId: Int!): [exercise_session!]!
+  exerciseSessions: [exercise_session!]!
   users: [user!]!
 }
 

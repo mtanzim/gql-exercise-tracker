@@ -5,7 +5,12 @@ const {
   floatArg,
   queryType,
 } = require("@nexus/schema");
-const { hashPassword, comparePassword, signToken } = require("./utils");
+const {
+  hashPassword,
+  comparePassword,
+  signToken,
+  getUserId,
+} = require("./utils");
 
 const User = objectType({
   name: "user",
@@ -140,10 +145,10 @@ const Mutation = objectType({
     t.field("createExerciseSession", {
       type: "exercise_session",
       args: {
-        userId: intArg({ required: true }),
         note: stringArg(),
       },
-      resolve: (_, { userId, note }, ctx, _info) => {
+      resolve: (_, { note }, ctx, _info) => {
+        const userId = getUserId(ctx);
         return ctx.prisma.exercise_session.create({
           data: {
             user: {
@@ -211,10 +216,9 @@ const Query = queryType({
 
     t.list.field("exerciseSessions", {
       type: "exercise_session",
-      args: {
-        userId: intArg({ required: true }),
-      },
-      resolve: (_, { userId }, ctx) => {
+      args: {},
+      resolve: (_, _args, ctx) => {
+        const userId = getUserId(ctx);
         return ctx.prisma.exercise_session.findMany({
           where: { userId },
         });

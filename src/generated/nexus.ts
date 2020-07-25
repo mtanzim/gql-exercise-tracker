@@ -571,7 +571,6 @@ export interface NexusGenArgTypes {
     }
     createExerciseSession: { // args
       note?: string | null; // String
-      userId: number; // Int!
     }
     deleteManyexercise_instance: { // args
       where?: NexusGenInputs['exercise_instanceWhereInput'] | null; // exercise_instanceWhereInput
@@ -620,9 +619,6 @@ export interface NexusGenArgTypes {
   Query: {
     exerciseInstances: { // args
       sessionId: number; // Int!
-    }
-    exerciseSessions: { // args
-      userId: number; // Int!
     }
   }
   exercise_session: {
