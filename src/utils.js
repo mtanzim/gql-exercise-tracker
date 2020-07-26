@@ -36,9 +36,50 @@ const getUserId = (ctx) => {
   throw new Error("Not authenticated");
 };
 
+const protectExerciseSession = async (
+  root,
+  args,
+  ctx,
+  info,
+  originalResolver
+) => {
+  const sessionId = args.where.id;
+  const userId = getUserId(ctx);
+  const session = await ctx.prisma.exercise_session.findOne({
+    where: { id: sessionId },
+  });
+  if (userId !== session.userId) {
+    throw new Error("Unauthorized");
+  }
+  const res = await originalResolver(root, args, ctx, info);
+  return res;
+};
+
+const protectExerciseInstance = async (
+  root,
+  args,
+  ctx,
+  info,
+  originalResolver
+) => {
+  const excInstanceId = args.where.id;
+  const userId = getUserId(ctx);
+  const excInstance = await ctx.prisma.exercise_instance.findOne({
+    where: { id: excInstanceId },
+    include: { exercise_session: true },
+  });
+  if (userId !== excInstance.exercise_session.userId) {
+    throw new Error("Unauthorized");
+  }
+  const res = await originalResolver(root, args, ctx, info);
+  return res;
+};
+
 module.exports = {
   hashPassword,
   comparePassword,
   signToken,
   getUserId,
+  protectExerciseSession,
+  protectExerciseInstance,
 };

@@ -10,7 +10,10 @@ const {
   comparePassword,
   signToken,
   getUserId,
+  protectExerciseSession,
+  protectExerciseInstance,
 } = require("./utils");
+const { resolve } = require("path");
 
 const User = objectType({
   name: "user",
@@ -59,21 +62,20 @@ const ExerciseSession = objectType({
     t.model.exercise_instance();
   },
 });
+
 const Mutation = objectType({
   name: "Mutation",
   definition(t) {
     // auto-gen deletes
-    t.crud.deleteOneuser({});
     t.crud.deleteOneexercise({});
-    t.crud.deleteManyexercise_instance({});
-    t.crud.deleteOneexercise_instance({});
-    t.crud.deleteManyexercise_session({});
-    t.crud.deleteOneexercise_session({});
+    t.crud.deleteOneexercise_instance({ resolve: protectExerciseInstance });
+    t.crud.deleteOneexercise_session({ resolve: protectExerciseSession });
     // auto-gen updates
-    t.crud.updateOneuser({});
     t.crud.updateOneexercise({});
-    t.crud.updateOneexercise_instance({});
-    t.crud.updateOneexercise_session({});
+    t.crud.updateOneexercise_instance({resolve: protectExerciseInstance});
+    t.crud.updateOneexercise_session({
+      resolve: protectExerciseSession,
+    });
 
     t.field("signupUser", {
       type: "auth",
