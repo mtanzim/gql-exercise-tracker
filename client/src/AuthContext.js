@@ -36,7 +36,6 @@ export const AuthContextProvider = ({ children }) => {
     const newState = { authenticated: true, token, user };
     setState(newState);
     localStorage.setItem(AUTH_INFO, JSON.stringify(newState));
-    console.log(authState);
   };
   const logout = () => {
     setState(initState);

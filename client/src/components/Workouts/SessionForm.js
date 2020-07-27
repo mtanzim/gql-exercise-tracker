@@ -15,7 +15,6 @@ export const SessionForm = ({ initValues, isEditing, onUpdate }) => {
         query: GET_SESSIONS,
       });
       const updated = current.concat([createExerciseSession]);
-      console.log(updated);
       cache.writeQuery({
         query: GET_SESSIONS,
         data: { exerciseSessions: updated },

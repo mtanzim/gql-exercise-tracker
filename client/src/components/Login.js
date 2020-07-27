@@ -55,7 +55,6 @@ export const Login = () => {
 
     try {
       const { token, user } = await getLoginData();
-      console.log({ token, user });
       authValue.login(user, token);
       setValues(getDefaultValues());
       history.push("/");

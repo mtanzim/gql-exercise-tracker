@@ -96,7 +96,6 @@ const Mutation = objectType({
             password: passwordHashed,
           },
         });
-        console.log(user);
         const token = signToken(user.id);
         return {
           user,

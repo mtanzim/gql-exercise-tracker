@@ -54,7 +54,6 @@ export const InstanceForm = ({ initValues, sessionId }) => {
           return prev;
       }
     }, {});
-    console.log(JSON.stringify(submitValues));
     try {
       await addExerciseInstance({
         variables: { sessionId, ...submitValues },
