@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap//Button";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { DELETE_INSTANCE, GET_INSTANCES } from "./api";
 
 export const ExerciseInstances = ({ data, isActive }) => {

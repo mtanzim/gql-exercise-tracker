@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useApolloClient } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 export const AUTH_INFO = "exercise-auth-info";
 
 const initState = {
@@ -22,6 +25,10 @@ export const AuthContext = React.createContext(defaultValue);
 
 export const AuthContextProvider = ({ children }) => {
   const [authState, setState] = useState(initState);
+  const history = useHistory();
+  const client = useApolloClient();
+
+
 
   useEffect(() => {
     if (!authState.authenticated) {
@@ -40,11 +47,13 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     setState(initState);
     localStorage.removeItem(AUTH_INFO);
+    client.clearStore();
+    history.push("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ authState, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+      <AuthContext.Provider value={{ authState, login, logout }}>
+        {children}
+      </AuthContext.Provider>
   );
 };

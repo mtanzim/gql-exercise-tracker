@@ -1,5 +1,4 @@
-import { ApolloProvider } from "@apollo/react-hooks";
-import ApolloClient from "apollo-boost";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -10,21 +9,23 @@ import * as serviceWorker from "./serviceWorker";
 
 const API_ENDPOINT = "http://localhost:4000";
 
+const getToken = () => {
+  let token = null;
+  try {
+    token = JSON.parse(localStorage.getItem(AUTH_INFO)).token;
+  } catch (err) {
+    console.error(err);
+  }
+
+  return {
+    authorization: token ? `Bearer ${token}` : "",
+  };
+};
+
 const client = new ApolloClient({
   uri: API_ENDPOINT,
-  request: (operation) => {
-    let token = null;
-    try {
-      token = JSON.parse(localStorage.getItem(AUTH_INFO)).token;
-    } catch(err) {
-      console.error(err)
-    }
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : "",
-      },
-    });
-  },
+  cache: new InMemoryCache(),
+  headers: { ...getToken() },
 });
 
 ReactDOM.render(

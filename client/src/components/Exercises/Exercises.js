@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import React, { useContext } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { AuthContext } from "../../AuthContext";

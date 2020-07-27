@@ -1,24 +1,19 @@
 import React, { useContext } from "react";
 import Nav from "react-bootstrap/Nav";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 export const Navigation = () => {
   const { authState, logout } = useContext(AuthContext);
   const { authenticated, user } = authState;
-  const history = useHistory();
 
-  const logoutAndRedirect = () => {
-    logout();
-    history.push("/login");
-  };
 
   if (authenticated) {
     return (
       <Nav variant="tabs">
         <Nav.Item>
           <code className="mr-2">{user.email}</code>
-          <i onClick={logoutAndRedirect} className="fa fa-sign-out" />
+          <i onClick={logout} className="fa fa-sign-out" />
         </Nav.Item>
         <Nav.Item className="mr-2 ml-4">
           <Link to="/">Home</Link>
