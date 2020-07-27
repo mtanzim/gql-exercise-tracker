@@ -2,14 +2,17 @@ import React, { useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import { useApolloClient } from "@apollo/client";
 
 export const Navigation = () => {
   const { authState, logout } = useContext(AuthContext);
   const { authenticated, user } = authState;
   const history = useHistory();
+  const client = useApolloClient();
 
   const logoutAndRedirect = () => {
     logout();
+    client.clearStore();
     history.push("/login");
   };
 

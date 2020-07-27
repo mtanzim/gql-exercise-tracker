@@ -51,8 +51,7 @@ const protectExerciseSession = async (
   if (userId !== session.userId) {
     throw new Error("Unauthorized");
   }
-  const res = await originalResolver(root, args, ctx, info);
-  return res;
+  return originalResolver(root, args, ctx, info);
 };
 
 const protectExerciseInstance = async (
@@ -71,8 +70,7 @@ const protectExerciseInstance = async (
   if (userId !== excInstance.exercise_session.userId) {
     throw new Error("Unauthorized");
   }
-  const res = await originalResolver(root, args, ctx, info);
-  return res;
+  return originalResolver(root, args, ctx, info);
 };
 
 const verifyAdmin = async (ctx) => {

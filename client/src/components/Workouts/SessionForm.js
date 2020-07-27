@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { GET_SESSIONS, MAKE_SESSION } from "./api";

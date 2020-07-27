@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 export const AUTH_INFO = "exercise-auth-info";
 
 const initState = {
@@ -43,8 +44,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authState, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+      <AuthContext.Provider value={{ authState, login, logout }}>
+        {children}
+      </AuthContext.Provider>
   );
 };
