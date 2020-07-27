@@ -13,7 +13,12 @@ const API_ENDPOINT = "http://localhost:4000";
 const client = new ApolloClient({
   uri: API_ENDPOINT,
   request: (operation) => {
-    const { token } = JSON.parse(localStorage.getItem(AUTH_INFO));
+    let token = null;
+    try {
+      token = JSON.parse(localStorage.getItem(AUTH_INFO)).token;
+    } catch(err) {
+      console.error(err)
+    }
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : "",

@@ -221,6 +221,7 @@ export interface NexusGenInputs {
   }
   userCreateWithoutExercise_sessionInput: { // input type
     email: string; // String!
+    isAdmin?: boolean | null; // Boolean
     name?: string | null; // String
     password: string; // String!
   }
@@ -233,6 +234,7 @@ export interface NexusGenInputs {
   userUpdateWithoutExercise_sessionDataInput: { // input type
     email?: string | null; // String
     id?: number | null; // Int
+    isAdmin?: boolean | null; // Boolean
     name?: string | null; // String
     password?: string | null; // String
   }
@@ -275,6 +277,7 @@ export interface NexusGenRootTypes {
   user: { // root type
     email: string; // String!
     id: number; // Int!
+    isAdmin: boolean; // Boolean!
     name?: string | null; // String
   }
   String: string;
@@ -334,7 +337,6 @@ export interface NexusGenFieldTypes {
     deleteOneexercise: NexusGenRootTypes['exercise'] | null; // exercise
     deleteOneexercise_instance: NexusGenRootTypes['exercise_instance'] | null; // exercise_instance
     deleteOneexercise_session: NexusGenRootTypes['exercise_session'] | null; // exercise_session
-    deleteOneuser: NexusGenRootTypes['user'] | null; // user
     loginUser: NexusGenRootTypes['auth']; // auth!
     signupUser: NexusGenRootTypes['auth']; // auth!
     updateOneexercise: NexusGenRootTypes['exercise'] | null; // exercise
@@ -374,6 +376,7 @@ export interface NexusGenFieldTypes {
   user: { // field return type
     email: string; // String!
     id: number; // Int!
+    isAdmin: boolean; // Boolean!
     name: string | null; // String
   }
 }
@@ -402,9 +405,6 @@ export interface NexusGenArgTypes {
     }
     deleteOneexercise_session: { // args
       where: NexusGenInputs['exercise_sessionWhereUniqueInput']; // exercise_sessionWhereUniqueInput!
-    }
-    deleteOneuser: { // args
-      where: NexusGenInputs['userWhereUniqueInput']; // userWhereUniqueInput!
     }
     loginUser: { // args
       email?: string | null; // String

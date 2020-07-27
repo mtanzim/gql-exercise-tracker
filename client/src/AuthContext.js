@@ -8,6 +8,7 @@ const initState = {
     id: null,
     name: null,
     email: null,
+    isAdmin: false,
   },
 };
 

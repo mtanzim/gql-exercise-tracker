@@ -245,7 +245,6 @@ type Mutation {
   deleteOneexercise(where: exerciseWhereUniqueInput!): exercise
   deleteOneexercise_instance(where: exercise_instanceWhereUniqueInput!): exercise_instance
   deleteOneexercise_session(where: exercise_sessionWhereUniqueInput!): exercise_session
-  deleteOneuser(where: userWhereUniqueInput!): user
   loginUser(email: String, password: String): auth!
   signupUser(email: String, name: String, password: String): auth!
   updateOneexercise(data: exerciseUpdateInput!, where: exerciseWhereUniqueInput!): exercise
@@ -285,6 +284,7 @@ type Query {
 type user {
   email: String!
   id: Int!
+  isAdmin: Boolean!
   name: String
 }
 
@@ -295,6 +295,7 @@ input userCreateOneWithoutExercise_sessionInput {
 
 input userCreateWithoutExercise_sessionInput {
   email: String!
+  isAdmin: Boolean
   name: String
   password: String!
 }
@@ -309,6 +310,7 @@ input userUpdateOneRequiredWithoutExercise_sessionInput {
 input userUpdateWithoutExercise_sessionDataInput {
   email: String
   id: Int
+  isAdmin: Boolean
   name: String
   password: String
 }

@@ -12,6 +12,8 @@ const {
   getUserId,
   protectExerciseSession,
   protectExerciseInstance,
+  verifyAdmin,
+  protectExercise,
 } = require("./utils");
 const { resolve } = require("path");
 
@@ -21,6 +23,7 @@ const User = objectType({
     t.model.id();
     t.model.name();
     t.model.email();
+    t.model.isAdmin();
   },
 });
 const AuthPayload = objectType({
@@ -67,12 +70,12 @@ const Mutation = objectType({
   name: "Mutation",
   definition(t) {
     // auto-gen deletes
-    t.crud.deleteOneexercise({});
+    t.crud.deleteOneexercise({ resolve: protectExercise });
     t.crud.deleteOneexercise_instance({ resolve: protectExerciseInstance });
     t.crud.deleteOneexercise_session({ resolve: protectExerciseSession });
     // auto-gen updates
-    t.crud.updateOneexercise({});
-    t.crud.updateOneexercise_instance({resolve: protectExerciseInstance});
+    t.crud.updateOneexercise({ resolve: protectExercise });
+    t.crud.updateOneexercise_instance({ resolve: protectExerciseInstance });
     t.crud.updateOneexercise_session({
       resolve: protectExerciseSession,
     });
@@ -109,6 +112,7 @@ const Mutation = objectType({
         password: stringArg(),
       },
       resolve: async (_, { email, password }, ctx, _info) => {
+
         const user = await ctx.prisma.user.findOne({
           where: {
             email,
@@ -135,7 +139,8 @@ const Mutation = objectType({
         name: stringArg(),
         label: stringArg({ nullable: true }),
       },
-      resolve: (_, { name, label }, ctx, _info) => {
+      resolve: async (_, { name, label }, ctx, _info) => {
+        await verifyAdmin(ctx);
         return ctx.prisma.exercise.create({
           data: {
             name,

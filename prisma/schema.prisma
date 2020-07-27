@@ -37,6 +37,7 @@ model exercise {
 model user {
   email            String             @unique
   id               Int                @default(autoincrement()) @id
+  isAdmin          Boolean            @default(false)
   name             String?
   password         String
   exercise_session exercise_session[]

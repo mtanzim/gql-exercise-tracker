@@ -8,6 +8,7 @@ export const REGISTER = gql`
         id
         name
         email
+        isAdmin
       }
     }
   }
@@ -21,6 +22,7 @@ export const LOGIN = gql`
         id
         name
         email
+        isAdmin
       }
     }
   }

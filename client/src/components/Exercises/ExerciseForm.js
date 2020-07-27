@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 
 export const ExerciseForm = ({ onSubmit, loading, initValues }) => {
+
   const [values, setValues] = useState({
     name: initValues?.name || "",
     label: initValues?.label || "",
@@ -14,6 +15,7 @@ export const ExerciseForm = ({ onSubmit, loading, initValues }) => {
 
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
+
 
   if (loading) {
     return <p>Submitting...</p>;

@@ -26,7 +26,7 @@ const comparePassword = (password, hash) =>
 const signToken = (userId) => jwt.sign({ userId }, APP_SECRET);
 
 const getUserId = (ctx) => {
-  const Authorization = ctx.request.get("Authorization");
+  const Authorization = ctx.request.get("authorization");
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
     const { userId } = jwt.verify(token, APP_SECRET);
@@ -75,6 +75,22 @@ const protectExerciseInstance = async (
   return res;
 };
 
+const verifyAdmin = async (ctx) => {
+  const userId = getUserId(ctx);
+  const user = await ctx.prisma.user.findOne({
+    where: { id: userId },
+  });
+  if (!user || !user.isAdmin) {
+    throw new Error("Unauthorized, not an admin");
+  }
+};
+
+const protectExercise = async (root, args, ctx, info, originalResolver) => {
+  await verifyAdmin(ctx);
+  const res = await originalResolver(root, args, ctx, info);
+  return res;
+};
+
 module.exports = {
   hashPassword,
   comparePassword,
@@ -82,4 +98,6 @@ module.exports = {
   getUserId,
   protectExerciseSession,
   protectExerciseInstance,
+  protectExercise,
+  verifyAdmin,
 };

@@ -1,12 +1,15 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import React from "react";
+import React, { useContext } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
+import { AuthContext } from "../../AuthContext";
 import { CREATE_EXERCISE, EXERCISES } from "./api";
 import { ExerciseForm } from "./ExerciseForm";
 import { Exercise } from "./ExerciseItem";
 
 export const Exercises = () => {
   const { loading, error, data } = useQuery(EXERCISES);
+  const { authState } = useContext(AuthContext);
+
   const [
     addExercise,
     { loading: formLoading, error: submitError },
@@ -52,17 +55,21 @@ export const Exercises = () => {
           <Exercise key={exc.id} exercise={exc} />
         ))}
       </ListGroup>
-      <h4 className="mt-4">Add new</h4>
-      <ListGroup>
-        <ListGroup.Item>
-          <ExerciseForm
-            loadig={formLoading}
-            onSubmit={onAdd}
-            className="mt-2"
-          />
-        </ListGroup.Item>
-      </ListGroup>
-      {submitError && <p>{submitError.message}</p>}
+      {authState?.user?.isAdmin && (
+        <React.Fragment>
+          <h4 className="mt-4">Add new</h4>
+          <ListGroup>
+            <ListGroup.Item>
+              <ExerciseForm
+                loading={formLoading}
+                onSubmit={onAdd}
+                className="mt-2"
+              />
+            </ListGroup.Item>
+          </ListGroup>
+          {submitError && <p>{submitError.message}</p>}
+        </React.Fragment>
+      )}
     </div>
   );
 };
