@@ -7,11 +7,6 @@ type auth {
   user: user!
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: Boolean
-}
-
 scalar DateTime
 
 type exercise {
@@ -29,11 +24,6 @@ type exercise_instance {
   weight: Float
 }
 
-input exercise_instanceCreateManyWithoutExercise_sessionInput {
-  connect: [exercise_instanceWhereUniqueInput!]
-  create: [exercise_instanceCreateWithoutExercise_sessionInput!]
-}
-
 input exercise_instanceCreateWithoutExercise_sessionInput {
   duration: Float
   exercise: exerciseCreateOneWithoutExercise_instanceInput!
@@ -46,12 +36,6 @@ input exercise_instanceCreateWithoutExerciseInput {
   exercise_session: exercise_sessionCreateOneWithoutExercise_instanceInput!
   repetitions: Int
   weight: Float
-}
-
-input exercise_instanceFilter {
-  every: exercise_instanceWhereInput
-  none: exercise_instanceWhereInput
-  some: exercise_instanceWhereInput
 }
 
 input exercise_instanceScalarWhereInput {
@@ -149,20 +133,6 @@ input exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput {
   where: exercise_instanceWhereUniqueInput!
 }
 
-input exercise_instanceWhereInput {
-  AND: [exercise_instanceWhereInput!]
-  duration: NullableFloatFilter
-  exercise: exerciseWhereInput
-  exercise_session: exercise_sessionWhereInput
-  exerciseId: IntFilter
-  id: IntFilter
-  NOT: [exercise_instanceWhereInput!]
-  OR: [exercise_instanceWhereInput!]
-  repetitions: NullableIntFilter
-  sessionId: IntFilter
-  weight: NullableFloatFilter
-}
-
 input exercise_instanceWhereUniqueInput {
   id: Int
 }
@@ -175,11 +145,6 @@ type exercise_session {
   user: user!
 }
 
-input exercise_sessionCreateManyWithoutUserInput {
-  connect: [exercise_sessionWhereUniqueInput!]
-  create: [exercise_sessionCreateWithoutUserInput!]
-}
-
 input exercise_sessionCreateOneWithoutExercise_instanceInput {
   connect: exercise_sessionWhereUniqueInput
   create: exercise_sessionCreateWithoutExercise_instanceInput
@@ -187,62 +152,12 @@ input exercise_sessionCreateOneWithoutExercise_instanceInput {
 
 input exercise_sessionCreateWithoutExercise_instanceInput {
   note: String
-  timestamp: DateTime
-  user: userCreateOneWithoutExercise_sessionInput!
-}
-
-input exercise_sessionCreateWithoutUserInput {
-  exercise_instance: exercise_instanceCreateManyWithoutExercise_sessionInput
-  note: String
-  timestamp: DateTime
-}
-
-input exercise_sessionFilter {
-  every: exercise_sessionWhereInput
-  none: exercise_sessionWhereInput
-  some: exercise_sessionWhereInput
-}
-
-input exercise_sessionScalarWhereInput {
-  AND: [exercise_sessionScalarWhereInput!]
-  exercise_instance: exercise_instanceFilter
-  id: IntFilter
-  NOT: [exercise_sessionScalarWhereInput!]
-  note: NullableStringFilter
-  OR: [exercise_sessionScalarWhereInput!]
-  timestamp: NullableDateTimeFilter
-  userId: IntFilter
 }
 
 input exercise_sessionUpdateInput {
   exercise_instance: exercise_instanceUpdateManyWithoutExercise_sessionInput
   id: Int
   note: String
-  timestamp: DateTime
-  user: userUpdateOneRequiredWithoutExercise_sessionInput
-}
-
-input exercise_sessionUpdateManyDataInput {
-  id: Int
-  note: String
-  timestamp: DateTime
-}
-
-input exercise_sessionUpdateManyWithoutUserInput {
-  connect: [exercise_sessionWhereUniqueInput!]
-  create: [exercise_sessionCreateWithoutUserInput!]
-  delete: [exercise_sessionWhereUniqueInput!]
-  deleteMany: [exercise_sessionScalarWhereInput!]
-  disconnect: [exercise_sessionWhereUniqueInput!]
-  set: [exercise_sessionWhereUniqueInput!]
-  update: [exercise_sessionUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [exercise_sessionUpdateManyWithWhereNestedInput!]
-  upsert: [exercise_sessionUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input exercise_sessionUpdateManyWithWhereNestedInput {
-  data: exercise_sessionUpdateManyDataInput!
-  where: exercise_sessionScalarWhereInput!
 }
 
 input exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput {
@@ -255,43 +170,11 @@ input exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput {
 input exercise_sessionUpdateWithoutExercise_instanceDataInput {
   id: Int
   note: String
-  timestamp: DateTime
-  user: userUpdateOneRequiredWithoutExercise_sessionInput
-}
-
-input exercise_sessionUpdateWithoutUserDataInput {
-  exercise_instance: exercise_instanceUpdateManyWithoutExercise_sessionInput
-  id: Int
-  note: String
-  timestamp: DateTime
-}
-
-input exercise_sessionUpdateWithWhereUniqueWithoutUserInput {
-  data: exercise_sessionUpdateWithoutUserDataInput!
-  where: exercise_sessionWhereUniqueInput!
 }
 
 input exercise_sessionUpsertWithoutExercise_instanceInput {
   create: exercise_sessionCreateWithoutExercise_instanceInput!
   update: exercise_sessionUpdateWithoutExercise_instanceDataInput!
-}
-
-input exercise_sessionUpsertWithWhereUniqueWithoutUserInput {
-  create: exercise_sessionCreateWithoutUserInput!
-  update: exercise_sessionUpdateWithoutUserDataInput!
-  where: exercise_sessionWhereUniqueInput!
-}
-
-input exercise_sessionWhereInput {
-  AND: [exercise_sessionWhereInput!]
-  exercise_instance: exercise_instanceFilter
-  id: IntFilter
-  NOT: [exercise_sessionWhereInput!]
-  note: NullableStringFilter
-  OR: [exercise_sessionWhereInput!]
-  timestamp: NullableDateTimeFilter
-  user: userWhereInput
-  userId: IntFilter
 }
 
 input exercise_sessionWhereUniqueInput {
@@ -333,16 +216,6 @@ input exerciseUpsertWithoutExercise_instanceInput {
   update: exerciseUpdateWithoutExercise_instanceDataInput!
 }
 
-input exerciseWhereInput {
-  AND: [exerciseWhereInput!]
-  exercise_instance: exercise_instanceFilter
-  id: IntFilter
-  label: StringFilter
-  name: StringFilter
-  NOT: [exerciseWhereInput!]
-  OR: [exerciseWhereInput!]
-}
-
 input exerciseWhereUniqueInput {
   id: Int
   name: String
@@ -366,88 +239,9 @@ type message {
   userId: Int!
 }
 
-input messageCreateManyWithoutUserInput {
-  connect: [messageWhereUniqueInput!]
-  create: [messageCreateWithoutUserInput!]
-}
-
-input messageCreateWithoutUserInput {
-  message: String!
-  timestamp: DateTime
-}
-
-input messageFilter {
-  every: messageWhereInput
-  none: messageWhereInput
-  some: messageWhereInput
-}
-
-input messageScalarWhereInput {
-  AND: [messageScalarWhereInput!]
-  id: IntFilter
-  message: StringFilter
-  NOT: [messageScalarWhereInput!]
-  OR: [messageScalarWhereInput!]
-  timestamp: NullableDateTimeFilter
-  userId: IntFilter
-}
-
 input messageUpdateInput {
   id: Int
   message: String
-  timestamp: DateTime
-  user: userUpdateOneRequiredWithoutMessageInput
-}
-
-input messageUpdateManyDataInput {
-  id: Int
-  message: String
-  timestamp: DateTime
-}
-
-input messageUpdateManyWithoutUserInput {
-  connect: [messageWhereUniqueInput!]
-  create: [messageCreateWithoutUserInput!]
-  delete: [messageWhereUniqueInput!]
-  deleteMany: [messageScalarWhereInput!]
-  disconnect: [messageWhereUniqueInput!]
-  set: [messageWhereUniqueInput!]
-  update: [messageUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [messageUpdateManyWithWhereNestedInput!]
-  upsert: [messageUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input messageUpdateManyWithWhereNestedInput {
-  data: messageUpdateManyDataInput!
-  where: messageScalarWhereInput!
-}
-
-input messageUpdateWithoutUserDataInput {
-  id: Int
-  message: String
-  timestamp: DateTime
-}
-
-input messageUpdateWithWhereUniqueWithoutUserInput {
-  data: messageUpdateWithoutUserDataInput!
-  where: messageWhereUniqueInput!
-}
-
-input messageUpsertWithWhereUniqueWithoutUserInput {
-  create: messageCreateWithoutUserInput!
-  update: messageUpdateWithoutUserDataInput!
-  where: messageWhereUniqueInput!
-}
-
-input messageWhereInput {
-  AND: [messageWhereInput!]
-  id: IntFilter
-  message: StringFilter
-  NOT: [messageWhereInput!]
-  OR: [messageWhereInput!]
-  timestamp: NullableDateTimeFilter
-  user: userWhereInput
-  userId: IntFilter
 }
 
 input messageWhereUniqueInput {
@@ -469,17 +263,6 @@ type Mutation {
   updateOneexercise_instance(data: exercise_instanceUpdateInput!, where: exercise_instanceWhereUniqueInput!): exercise_instance
   updateOneexercise_session(data: exercise_sessionUpdateInput!, where: exercise_sessionWhereUniqueInput!): exercise_session
   updateOnemessage(data: messageUpdateInput!, where: messageWhereUniqueInput!): message
-}
-
-input NullableDateTimeFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  not: DateTime
-  notIn: [DateTime!]
 }
 
 input NullableFloatFilter {
@@ -504,40 +287,12 @@ input NullableIntFilter {
   notIn: [Int!]
 }
 
-input NullableStringFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: String
-  notIn: [String!]
-  startsWith: String
-}
-
 type Query {
   exerciseInstances(sessionId: Int!): [exercise_instance!]!
   exercises: [exercise!]!
   exerciseSessions: [exercise_session!]!
   messages: [message!]!
   users: [user!]!
-}
-
-input StringFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: String
-  notIn: [String!]
-  startsWith: String
 }
 
 type Subscription {
@@ -549,85 +304,4 @@ type user {
   id: Int!
   isAdmin: Boolean!
   name: String
-}
-
-input userCreateOneWithoutExercise_sessionInput {
-  connect: userWhereUniqueInput
-  create: userCreateWithoutExercise_sessionInput
-}
-
-input userCreateWithoutExercise_sessionInput {
-  email: String!
-  isAdmin: Boolean
-  message: messageCreateManyWithoutUserInput
-  name: String
-  password: String!
-}
-
-input userCreateWithoutMessageInput {
-  email: String!
-  exercise_session: exercise_sessionCreateManyWithoutUserInput
-  isAdmin: Boolean
-  name: String
-  password: String!
-}
-
-input userUpdateOneRequiredWithoutExercise_sessionInput {
-  connect: userWhereUniqueInput
-  create: userCreateWithoutExercise_sessionInput
-  update: userUpdateWithoutExercise_sessionDataInput
-  upsert: userUpsertWithoutExercise_sessionInput
-}
-
-input userUpdateOneRequiredWithoutMessageInput {
-  connect: userWhereUniqueInput
-  create: userCreateWithoutMessageInput
-  update: userUpdateWithoutMessageDataInput
-  upsert: userUpsertWithoutMessageInput
-}
-
-input userUpdateWithoutExercise_sessionDataInput {
-  email: String
-  id: Int
-  isAdmin: Boolean
-  message: messageUpdateManyWithoutUserInput
-  name: String
-  password: String
-}
-
-input userUpdateWithoutMessageDataInput {
-  email: String
-  exercise_session: exercise_sessionUpdateManyWithoutUserInput
-  id: Int
-  isAdmin: Boolean
-  name: String
-  password: String
-}
-
-input userUpsertWithoutExercise_sessionInput {
-  create: userCreateWithoutExercise_sessionInput!
-  update: userUpdateWithoutExercise_sessionDataInput!
-}
-
-input userUpsertWithoutMessageInput {
-  create: userCreateWithoutMessageInput!
-  update: userUpdateWithoutMessageDataInput!
-}
-
-input userWhereInput {
-  AND: [userWhereInput!]
-  email: StringFilter
-  exercise_session: exercise_sessionFilter
-  id: IntFilter
-  isAdmin: BooleanFilter
-  message: messageFilter
-  name: NullableStringFilter
-  NOT: [userWhereInput!]
-  OR: [userWhereInput!]
-  password: StringFilter
-}
-
-input userWhereUniqueInput {
-  email: String
-  id: Int
 }
