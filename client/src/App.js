@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Exercises } from "./components/Exercises/Exercises";
-import { Forum } from "./components/Forum";
+import { Forum } from "./components/Forum/Forum";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Navigation } from "./components/Navigation";
