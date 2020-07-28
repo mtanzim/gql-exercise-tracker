@@ -14,6 +14,7 @@ const {
   protectExerciseInstance,
   verifyAdmin,
   protectExercise,
+  protectMessage,
 } = require("./utils");
 const { resolve } = require("path");
 
@@ -66,6 +67,16 @@ const ExerciseSession = objectType({
   },
 });
 
+const Message = objectType({
+  name: "message",
+  definition(t) {
+    t.model.id();
+    t.model.message();
+    t.model.userId();
+    t.model.timestamp();
+  },
+});
+
 const Mutation = objectType({
   name: "Mutation",
   definition(t) {
@@ -73,11 +84,17 @@ const Mutation = objectType({
     t.crud.deleteOneexercise({ resolve: protectExercise });
     t.crud.deleteOneexercise_instance({ resolve: protectExerciseInstance });
     t.crud.deleteOneexercise_session({ resolve: protectExerciseSession });
+    t.crud.deleteOnemessage({
+      resolve: protectMessage,
+    });
     // auto-gen updates
     t.crud.updateOneexercise({ resolve: protectExercise });
     t.crud.updateOneexercise_instance({ resolve: protectExerciseInstance });
     t.crud.updateOneexercise_session({
       resolve: protectExerciseSession,
+    });
+    t.crud.updateOnemessage({
+      resolve: protectMessage,
     });
 
     t.field("signupUser", {
@@ -111,7 +128,6 @@ const Mutation = objectType({
         password: stringArg(),
       },
       resolve: async (_, { email, password }, ctx, _info) => {
-
         const user = await ctx.prisma.user.findOne({
           where: {
             email,
@@ -148,6 +164,26 @@ const Mutation = objectType({
         });
       },
     });
+    t.field("createMessage", {
+      type: "message",
+      args: {
+        message: stringArg(),
+      },
+      resolve: (_, { message }, ctx, _info) => {
+        const userId = getUserId(ctx);
+        return ctx.prisma.message.create({
+          data: {
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+            message,
+          },
+        });
+      },
+    });
+
     t.field("createExerciseSession", {
       type: "exercise_session",
       args: {
@@ -213,6 +249,14 @@ const Query = queryType({
         return ctx.prisma.user.findMany();
       },
     });
+
+    t.list.field("messages", {
+      type: "message",
+      resolve: (_, _args, ctx) => {
+        return ctx.prisma.message.findMany();
+      },
+    });
+
     t.list.field("exercises", {
       type: "exercise",
       resolve: (_, _args, ctx) => {
@@ -257,6 +301,7 @@ module.exports = {
   Exercise,
   ExerciseSession,
   ExerciseInstance,
+  Message,
   Mutation,
   Query,
 };

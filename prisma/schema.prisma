@@ -41,4 +41,13 @@ model user {
   name             String?
   password         String
   exercise_session exercise_session[]
+  message          message[]
+}
+
+model message {
+  id        Int       @default(autoincrement()) @id
+  message   String
+  timestamp DateTime? @default(now())
+  userId    Int
+  user      user      @relation(fields: [userId], references: [id])
 }

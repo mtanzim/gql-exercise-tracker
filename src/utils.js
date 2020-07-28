@@ -89,6 +89,18 @@ const protectExercise = async (root, args, ctx, info, originalResolver) => {
   return res;
 };
 
+const protectMessage = async (root, args, ctx, info, originalResolver) => {
+  const messageId = args.where.id;
+  const userId = getUserId(ctx);
+  const message = await ctx.prisma.message.findOne({
+    where: { id: messageId },
+  });
+  if (userId !== message.userId) {
+    throw new Error("Unauthorized");
+  }
+  return originalResolver(root, args, ctx, info);
+};
+
 module.exports = {
   hashPassword,
   comparePassword,
@@ -97,5 +109,6 @@ module.exports = {
   protectExerciseSession,
   protectExerciseInstance,
   protectExercise,
+  protectMessage,
   verifyAdmin,
 };
