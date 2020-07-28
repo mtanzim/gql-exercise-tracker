@@ -34,15 +34,6 @@ const server = new GraphQLServer({
     plugins: [
       nexusPrismaPlugin({
         experimentalCRUD: true,
-        // remove user and timestamp fields from input types
-        computedInputs: {
-          user: ({ _args, ctx, _info }) => ({
-            connect: {
-              id: getUserId(ctx),
-            },
-          }),
-          timestamp: ({ _args, ctx, _info }) => ({}),
-        },
       }),
     ],
     outputs: {

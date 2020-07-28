@@ -19,6 +19,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  BooleanFilter: { // input type
+    equals?: boolean | null; // Boolean
+    not?: boolean | null; // Boolean
+  }
   IntFilter: { // input type
     equals?: number | null; // Int
     gt?: number | null; // Int
@@ -28,6 +32,16 @@ export interface NexusGenInputs {
     lte?: number | null; // Int
     not?: number | null; // Int
     notIn?: number[] | null; // [Int!]
+  }
+  NullableDateTimeFilter: { // input type
+    equals?: any | null; // DateTime
+    gt?: any | null; // DateTime
+    gte?: any | null; // DateTime
+    in?: any[] | null; // [DateTime!]
+    lt?: any | null; // DateTime
+    lte?: any | null; // DateTime
+    not?: any | null; // DateTime
+    notIn?: any[] | null; // [DateTime!]
   }
   NullableFloatFilter: { // input type
     equals?: number | null; // Float
@@ -48,6 +62,32 @@ export interface NexusGenInputs {
     lte?: number | null; // Int
     not?: number | null; // Int
     notIn?: number[] | null; // [Int!]
+  }
+  NullableStringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: string | null; // String
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
+  }
+  StringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: string | null; // String
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
   }
   exerciseCreateOneWithoutExercise_instanceInput: { // input type
     connect?: NexusGenInputs['exerciseWhereUniqueInput'] | null; // exerciseWhereUniqueInput
@@ -78,9 +118,22 @@ export interface NexusGenInputs {
     create: NexusGenInputs['exerciseCreateWithoutExercise_instanceInput']; // exerciseCreateWithoutExercise_instanceInput!
     update: NexusGenInputs['exerciseUpdateWithoutExercise_instanceDataInput']; // exerciseUpdateWithoutExercise_instanceDataInput!
   }
+  exerciseWhereInput: { // input type
+    AND?: NexusGenInputs['exerciseWhereInput'][] | null; // [exerciseWhereInput!]
+    exercise_instance?: NexusGenInputs['exercise_instanceFilter'] | null; // exercise_instanceFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    label?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['exerciseWhereInput'][] | null; // [exerciseWhereInput!]
+    OR?: NexusGenInputs['exerciseWhereInput'][] | null; // [exerciseWhereInput!]
+  }
   exerciseWhereUniqueInput: { // input type
     id?: number | null; // Int
     name?: string | null; // String
+  }
+  exercise_instanceCreateManyWithoutExercise_sessionInput: { // input type
+    connect?: NexusGenInputs['exercise_instanceWhereUniqueInput'][] | null; // [exercise_instanceWhereUniqueInput!]
+    create?: NexusGenInputs['exercise_instanceCreateWithoutExercise_sessionInput'][] | null; // [exercise_instanceCreateWithoutExercise_sessionInput!]
   }
   exercise_instanceCreateWithoutExerciseInput: { // input type
     duration?: number | null; // Float
@@ -93,6 +146,11 @@ export interface NexusGenInputs {
     exercise: NexusGenInputs['exerciseCreateOneWithoutExercise_instanceInput']; // exerciseCreateOneWithoutExercise_instanceInput!
     repetitions?: number | null; // Int
     weight?: number | null; // Float
+  }
+  exercise_instanceFilter: { // input type
+    every?: NexusGenInputs['exercise_instanceWhereInput'] | null; // exercise_instanceWhereInput
+    none?: NexusGenInputs['exercise_instanceWhereInput'] | null; // exercise_instanceWhereInput
+    some?: NexusGenInputs['exercise_instanceWhereInput'] | null; // exercise_instanceWhereInput
   }
   exercise_instanceScalarWhereInput: { // input type
     AND?: NexusGenInputs['exercise_instanceScalarWhereInput'][] | null; // [exercise_instanceScalarWhereInput!]
@@ -177,8 +235,25 @@ export interface NexusGenInputs {
     update: NexusGenInputs['exercise_instanceUpdateWithoutExercise_sessionDataInput']; // exercise_instanceUpdateWithoutExercise_sessionDataInput!
     where: NexusGenInputs['exercise_instanceWhereUniqueInput']; // exercise_instanceWhereUniqueInput!
   }
+  exercise_instanceWhereInput: { // input type
+    AND?: NexusGenInputs['exercise_instanceWhereInput'][] | null; // [exercise_instanceWhereInput!]
+    duration?: NexusGenInputs['NullableFloatFilter'] | null; // NullableFloatFilter
+    exercise?: NexusGenInputs['exerciseWhereInput'] | null; // exerciseWhereInput
+    exercise_session?: NexusGenInputs['exercise_sessionWhereInput'] | null; // exercise_sessionWhereInput
+    exerciseId?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    NOT?: NexusGenInputs['exercise_instanceWhereInput'][] | null; // [exercise_instanceWhereInput!]
+    OR?: NexusGenInputs['exercise_instanceWhereInput'][] | null; // [exercise_instanceWhereInput!]
+    repetitions?: NexusGenInputs['NullableIntFilter'] | null; // NullableIntFilter
+    sessionId?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    weight?: NexusGenInputs['NullableFloatFilter'] | null; // NullableFloatFilter
+  }
   exercise_instanceWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  exercise_sessionCreateManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['exercise_sessionWhereUniqueInput'][] | null; // [exercise_sessionWhereUniqueInput!]
+    create?: NexusGenInputs['exercise_sessionCreateWithoutUserInput'][] | null; // [exercise_sessionCreateWithoutUserInput!]
   }
   exercise_sessionCreateOneWithoutExercise_instanceInput: { // input type
     connect?: NexusGenInputs['exercise_sessionWhereUniqueInput'] | null; // exercise_sessionWhereUniqueInput
@@ -186,11 +261,55 @@ export interface NexusGenInputs {
   }
   exercise_sessionCreateWithoutExercise_instanceInput: { // input type
     note?: string | null; // String
+    timestamp?: any | null; // DateTime
+    user: NexusGenInputs['userCreateOneWithoutExercise_sessionInput']; // userCreateOneWithoutExercise_sessionInput!
+  }
+  exercise_sessionCreateWithoutUserInput: { // input type
+    exercise_instance?: NexusGenInputs['exercise_instanceCreateManyWithoutExercise_sessionInput'] | null; // exercise_instanceCreateManyWithoutExercise_sessionInput
+    note?: string | null; // String
+    timestamp?: any | null; // DateTime
+  }
+  exercise_sessionFilter: { // input type
+    every?: NexusGenInputs['exercise_sessionWhereInput'] | null; // exercise_sessionWhereInput
+    none?: NexusGenInputs['exercise_sessionWhereInput'] | null; // exercise_sessionWhereInput
+    some?: NexusGenInputs['exercise_sessionWhereInput'] | null; // exercise_sessionWhereInput
+  }
+  exercise_sessionScalarWhereInput: { // input type
+    AND?: NexusGenInputs['exercise_sessionScalarWhereInput'][] | null; // [exercise_sessionScalarWhereInput!]
+    exercise_instance?: NexusGenInputs['exercise_instanceFilter'] | null; // exercise_instanceFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    NOT?: NexusGenInputs['exercise_sessionScalarWhereInput'][] | null; // [exercise_sessionScalarWhereInput!]
+    note?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
+    OR?: NexusGenInputs['exercise_sessionScalarWhereInput'][] | null; // [exercise_sessionScalarWhereInput!]
+    timestamp?: NexusGenInputs['NullableDateTimeFilter'] | null; // NullableDateTimeFilter
+    userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
   exercise_sessionUpdateInput: { // input type
     exercise_instance?: NexusGenInputs['exercise_instanceUpdateManyWithoutExercise_sessionInput'] | null; // exercise_instanceUpdateManyWithoutExercise_sessionInput
     id?: number | null; // Int
     note?: string | null; // String
+    timestamp?: any | null; // DateTime
+    user?: NexusGenInputs['userUpdateOneRequiredWithoutExercise_sessionInput'] | null; // userUpdateOneRequiredWithoutExercise_sessionInput
+  }
+  exercise_sessionUpdateManyDataInput: { // input type
+    id?: number | null; // Int
+    note?: string | null; // String
+    timestamp?: any | null; // DateTime
+  }
+  exercise_sessionUpdateManyWithWhereNestedInput: { // input type
+    data: NexusGenInputs['exercise_sessionUpdateManyDataInput']; // exercise_sessionUpdateManyDataInput!
+    where: NexusGenInputs['exercise_sessionScalarWhereInput']; // exercise_sessionScalarWhereInput!
+  }
+  exercise_sessionUpdateManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['exercise_sessionWhereUniqueInput'][] | null; // [exercise_sessionWhereUniqueInput!]
+    create?: NexusGenInputs['exercise_sessionCreateWithoutUserInput'][] | null; // [exercise_sessionCreateWithoutUserInput!]
+    delete?: NexusGenInputs['exercise_sessionWhereUniqueInput'][] | null; // [exercise_sessionWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['exercise_sessionScalarWhereInput'][] | null; // [exercise_sessionScalarWhereInput!]
+    disconnect?: NexusGenInputs['exercise_sessionWhereUniqueInput'][] | null; // [exercise_sessionWhereUniqueInput!]
+    set?: NexusGenInputs['exercise_sessionWhereUniqueInput'][] | null; // [exercise_sessionWhereUniqueInput!]
+    update?: NexusGenInputs['exercise_sessionUpdateWithWhereUniqueWithoutUserInput'][] | null; // [exercise_sessionUpdateWithWhereUniqueWithoutUserInput!]
+    updateMany?: NexusGenInputs['exercise_sessionUpdateManyWithWhereNestedInput'][] | null; // [exercise_sessionUpdateManyWithWhereNestedInput!]
+    upsert?: NexusGenInputs['exercise_sessionUpsertWithWhereUniqueWithoutUserInput'][] | null; // [exercise_sessionUpsertWithWhereUniqueWithoutUserInput!]
   }
   exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput: { // input type
     connect?: NexusGenInputs['exercise_sessionWhereUniqueInput'] | null; // exercise_sessionWhereUniqueInput
@@ -198,22 +317,188 @@ export interface NexusGenInputs {
     update?: NexusGenInputs['exercise_sessionUpdateWithoutExercise_instanceDataInput'] | null; // exercise_sessionUpdateWithoutExercise_instanceDataInput
     upsert?: NexusGenInputs['exercise_sessionUpsertWithoutExercise_instanceInput'] | null; // exercise_sessionUpsertWithoutExercise_instanceInput
   }
+  exercise_sessionUpdateWithWhereUniqueWithoutUserInput: { // input type
+    data: NexusGenInputs['exercise_sessionUpdateWithoutUserDataInput']; // exercise_sessionUpdateWithoutUserDataInput!
+    where: NexusGenInputs['exercise_sessionWhereUniqueInput']; // exercise_sessionWhereUniqueInput!
+  }
   exercise_sessionUpdateWithoutExercise_instanceDataInput: { // input type
     id?: number | null; // Int
     note?: string | null; // String
+    timestamp?: any | null; // DateTime
+    user?: NexusGenInputs['userUpdateOneRequiredWithoutExercise_sessionInput'] | null; // userUpdateOneRequiredWithoutExercise_sessionInput
+  }
+  exercise_sessionUpdateWithoutUserDataInput: { // input type
+    exercise_instance?: NexusGenInputs['exercise_instanceUpdateManyWithoutExercise_sessionInput'] | null; // exercise_instanceUpdateManyWithoutExercise_sessionInput
+    id?: number | null; // Int
+    note?: string | null; // String
+    timestamp?: any | null; // DateTime
+  }
+  exercise_sessionUpsertWithWhereUniqueWithoutUserInput: { // input type
+    create: NexusGenInputs['exercise_sessionCreateWithoutUserInput']; // exercise_sessionCreateWithoutUserInput!
+    update: NexusGenInputs['exercise_sessionUpdateWithoutUserDataInput']; // exercise_sessionUpdateWithoutUserDataInput!
+    where: NexusGenInputs['exercise_sessionWhereUniqueInput']; // exercise_sessionWhereUniqueInput!
   }
   exercise_sessionUpsertWithoutExercise_instanceInput: { // input type
     create: NexusGenInputs['exercise_sessionCreateWithoutExercise_instanceInput']; // exercise_sessionCreateWithoutExercise_instanceInput!
     update: NexusGenInputs['exercise_sessionUpdateWithoutExercise_instanceDataInput']; // exercise_sessionUpdateWithoutExercise_instanceDataInput!
   }
+  exercise_sessionWhereInput: { // input type
+    AND?: NexusGenInputs['exercise_sessionWhereInput'][] | null; // [exercise_sessionWhereInput!]
+    exercise_instance?: NexusGenInputs['exercise_instanceFilter'] | null; // exercise_instanceFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    NOT?: NexusGenInputs['exercise_sessionWhereInput'][] | null; // [exercise_sessionWhereInput!]
+    note?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
+    OR?: NexusGenInputs['exercise_sessionWhereInput'][] | null; // [exercise_sessionWhereInput!]
+    timestamp?: NexusGenInputs['NullableDateTimeFilter'] | null; // NullableDateTimeFilter
+    user?: NexusGenInputs['userWhereInput'] | null; // userWhereInput
+    userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
+  }
   exercise_sessionWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  messageCreateManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['messageWhereUniqueInput'][] | null; // [messageWhereUniqueInput!]
+    create?: NexusGenInputs['messageCreateWithoutUserInput'][] | null; // [messageCreateWithoutUserInput!]
+  }
+  messageCreateWithoutUserInput: { // input type
+    message: string; // String!
+    timestamp?: any | null; // DateTime
+  }
+  messageFilter: { // input type
+    every?: NexusGenInputs['messageWhereInput'] | null; // messageWhereInput
+    none?: NexusGenInputs['messageWhereInput'] | null; // messageWhereInput
+    some?: NexusGenInputs['messageWhereInput'] | null; // messageWhereInput
+  }
+  messageScalarWhereInput: { // input type
+    AND?: NexusGenInputs['messageScalarWhereInput'][] | null; // [messageScalarWhereInput!]
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    message?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['messageScalarWhereInput'][] | null; // [messageScalarWhereInput!]
+    OR?: NexusGenInputs['messageScalarWhereInput'][] | null; // [messageScalarWhereInput!]
+    timestamp?: NexusGenInputs['NullableDateTimeFilter'] | null; // NullableDateTimeFilter
+    userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
   messageUpdateInput: { // input type
     id?: number | null; // Int
     message?: string | null; // String
+    timestamp?: any | null; // DateTime
+    user?: NexusGenInputs['userUpdateOneRequiredWithoutMessageInput'] | null; // userUpdateOneRequiredWithoutMessageInput
+  }
+  messageUpdateManyDataInput: { // input type
+    id?: number | null; // Int
+    message?: string | null; // String
+    timestamp?: any | null; // DateTime
+  }
+  messageUpdateManyWithWhereNestedInput: { // input type
+    data: NexusGenInputs['messageUpdateManyDataInput']; // messageUpdateManyDataInput!
+    where: NexusGenInputs['messageScalarWhereInput']; // messageScalarWhereInput!
+  }
+  messageUpdateManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['messageWhereUniqueInput'][] | null; // [messageWhereUniqueInput!]
+    create?: NexusGenInputs['messageCreateWithoutUserInput'][] | null; // [messageCreateWithoutUserInput!]
+    delete?: NexusGenInputs['messageWhereUniqueInput'][] | null; // [messageWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['messageScalarWhereInput'][] | null; // [messageScalarWhereInput!]
+    disconnect?: NexusGenInputs['messageWhereUniqueInput'][] | null; // [messageWhereUniqueInput!]
+    set?: NexusGenInputs['messageWhereUniqueInput'][] | null; // [messageWhereUniqueInput!]
+    update?: NexusGenInputs['messageUpdateWithWhereUniqueWithoutUserInput'][] | null; // [messageUpdateWithWhereUniqueWithoutUserInput!]
+    updateMany?: NexusGenInputs['messageUpdateManyWithWhereNestedInput'][] | null; // [messageUpdateManyWithWhereNestedInput!]
+    upsert?: NexusGenInputs['messageUpsertWithWhereUniqueWithoutUserInput'][] | null; // [messageUpsertWithWhereUniqueWithoutUserInput!]
+  }
+  messageUpdateWithWhereUniqueWithoutUserInput: { // input type
+    data: NexusGenInputs['messageUpdateWithoutUserDataInput']; // messageUpdateWithoutUserDataInput!
+    where: NexusGenInputs['messageWhereUniqueInput']; // messageWhereUniqueInput!
+  }
+  messageUpdateWithoutUserDataInput: { // input type
+    id?: number | null; // Int
+    message?: string | null; // String
+    timestamp?: any | null; // DateTime
+  }
+  messageUpsertWithWhereUniqueWithoutUserInput: { // input type
+    create: NexusGenInputs['messageCreateWithoutUserInput']; // messageCreateWithoutUserInput!
+    update: NexusGenInputs['messageUpdateWithoutUserDataInput']; // messageUpdateWithoutUserDataInput!
+    where: NexusGenInputs['messageWhereUniqueInput']; // messageWhereUniqueInput!
+  }
+  messageWhereInput: { // input type
+    AND?: NexusGenInputs['messageWhereInput'][] | null; // [messageWhereInput!]
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    message?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['messageWhereInput'][] | null; // [messageWhereInput!]
+    OR?: NexusGenInputs['messageWhereInput'][] | null; // [messageWhereInput!]
+    timestamp?: NexusGenInputs['NullableDateTimeFilter'] | null; // NullableDateTimeFilter
+    user?: NexusGenInputs['userWhereInput'] | null; // userWhereInput
+    userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
   messageWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
+  userCreateOneWithoutExercise_sessionInput: { // input type
+    connect?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
+    create?: NexusGenInputs['userCreateWithoutExercise_sessionInput'] | null; // userCreateWithoutExercise_sessionInput
+  }
+  userCreateWithoutExercise_sessionInput: { // input type
+    email: string; // String!
+    isAdmin?: boolean | null; // Boolean
+    message?: NexusGenInputs['messageCreateManyWithoutUserInput'] | null; // messageCreateManyWithoutUserInput
+    name?: string | null; // String
+    password: string; // String!
+  }
+  userCreateWithoutMessageInput: { // input type
+    email: string; // String!
+    exercise_session?: NexusGenInputs['exercise_sessionCreateManyWithoutUserInput'] | null; // exercise_sessionCreateManyWithoutUserInput
+    isAdmin?: boolean | null; // Boolean
+    name?: string | null; // String
+    password: string; // String!
+  }
+  userUpdateOneRequiredWithoutExercise_sessionInput: { // input type
+    connect?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
+    create?: NexusGenInputs['userCreateWithoutExercise_sessionInput'] | null; // userCreateWithoutExercise_sessionInput
+    update?: NexusGenInputs['userUpdateWithoutExercise_sessionDataInput'] | null; // userUpdateWithoutExercise_sessionDataInput
+    upsert?: NexusGenInputs['userUpsertWithoutExercise_sessionInput'] | null; // userUpsertWithoutExercise_sessionInput
+  }
+  userUpdateOneRequiredWithoutMessageInput: { // input type
+    connect?: NexusGenInputs['userWhereUniqueInput'] | null; // userWhereUniqueInput
+    create?: NexusGenInputs['userCreateWithoutMessageInput'] | null; // userCreateWithoutMessageInput
+    update?: NexusGenInputs['userUpdateWithoutMessageDataInput'] | null; // userUpdateWithoutMessageDataInput
+    upsert?: NexusGenInputs['userUpsertWithoutMessageInput'] | null; // userUpsertWithoutMessageInput
+  }
+  userUpdateWithoutExercise_sessionDataInput: { // input type
+    email?: string | null; // String
+    id?: number | null; // Int
+    isAdmin?: boolean | null; // Boolean
+    message?: NexusGenInputs['messageUpdateManyWithoutUserInput'] | null; // messageUpdateManyWithoutUserInput
+    name?: string | null; // String
+    password?: string | null; // String
+  }
+  userUpdateWithoutMessageDataInput: { // input type
+    email?: string | null; // String
+    exercise_session?: NexusGenInputs['exercise_sessionUpdateManyWithoutUserInput'] | null; // exercise_sessionUpdateManyWithoutUserInput
+    id?: number | null; // Int
+    isAdmin?: boolean | null; // Boolean
+    name?: string | null; // String
+    password?: string | null; // String
+  }
+  userUpsertWithoutExercise_sessionInput: { // input type
+    create: NexusGenInputs['userCreateWithoutExercise_sessionInput']; // userCreateWithoutExercise_sessionInput!
+    update: NexusGenInputs['userUpdateWithoutExercise_sessionDataInput']; // userUpdateWithoutExercise_sessionDataInput!
+  }
+  userUpsertWithoutMessageInput: { // input type
+    create: NexusGenInputs['userCreateWithoutMessageInput']; // userCreateWithoutMessageInput!
+    update: NexusGenInputs['userUpdateWithoutMessageDataInput']; // userUpdateWithoutMessageDataInput!
+  }
+  userWhereInput: { // input type
+    AND?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    email?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    exercise_session?: NexusGenInputs['exercise_sessionFilter'] | null; // exercise_sessionFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    isAdmin?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
+    message?: NexusGenInputs['messageFilter'] | null; // messageFilter
+    name?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
+    NOT?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    OR?: NexusGenInputs['userWhereInput'][] | null; // [userWhereInput!]
+    password?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  userWhereUniqueInput: { // input type
+    email?: string | null; // String
     id?: number | null; // Int
   }
 }
@@ -266,18 +551,25 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  BooleanFilter: NexusGenInputs['BooleanFilter'];
   IntFilter: NexusGenInputs['IntFilter'];
+  NullableDateTimeFilter: NexusGenInputs['NullableDateTimeFilter'];
   NullableFloatFilter: NexusGenInputs['NullableFloatFilter'];
   NullableIntFilter: NexusGenInputs['NullableIntFilter'];
+  NullableStringFilter: NexusGenInputs['NullableStringFilter'];
+  StringFilter: NexusGenInputs['StringFilter'];
   exerciseCreateOneWithoutExercise_instanceInput: NexusGenInputs['exerciseCreateOneWithoutExercise_instanceInput'];
   exerciseCreateWithoutExercise_instanceInput: NexusGenInputs['exerciseCreateWithoutExercise_instanceInput'];
   exerciseUpdateInput: NexusGenInputs['exerciseUpdateInput'];
   exerciseUpdateOneRequiredWithoutExercise_instanceInput: NexusGenInputs['exerciseUpdateOneRequiredWithoutExercise_instanceInput'];
   exerciseUpdateWithoutExercise_instanceDataInput: NexusGenInputs['exerciseUpdateWithoutExercise_instanceDataInput'];
   exerciseUpsertWithoutExercise_instanceInput: NexusGenInputs['exerciseUpsertWithoutExercise_instanceInput'];
+  exerciseWhereInput: NexusGenInputs['exerciseWhereInput'];
   exerciseWhereUniqueInput: NexusGenInputs['exerciseWhereUniqueInput'];
+  exercise_instanceCreateManyWithoutExercise_sessionInput: NexusGenInputs['exercise_instanceCreateManyWithoutExercise_sessionInput'];
   exercise_instanceCreateWithoutExerciseInput: NexusGenInputs['exercise_instanceCreateWithoutExerciseInput'];
   exercise_instanceCreateWithoutExercise_sessionInput: NexusGenInputs['exercise_instanceCreateWithoutExercise_sessionInput'];
+  exercise_instanceFilter: NexusGenInputs['exercise_instanceFilter'];
   exercise_instanceScalarWhereInput: NexusGenInputs['exercise_instanceScalarWhereInput'];
   exercise_instanceUpdateInput: NexusGenInputs['exercise_instanceUpdateInput'];
   exercise_instanceUpdateManyDataInput: NexusGenInputs['exercise_instanceUpdateManyDataInput'];
@@ -290,16 +582,50 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   exercise_instanceUpdateWithoutExercise_sessionDataInput: NexusGenInputs['exercise_instanceUpdateWithoutExercise_sessionDataInput'];
   exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput: NexusGenInputs['exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput'];
   exercise_instanceUpsertWithWhereUniqueWithoutExercise_sessionInput: NexusGenInputs['exercise_instanceUpsertWithWhereUniqueWithoutExercise_sessionInput'];
+  exercise_instanceWhereInput: NexusGenInputs['exercise_instanceWhereInput'];
   exercise_instanceWhereUniqueInput: NexusGenInputs['exercise_instanceWhereUniqueInput'];
+  exercise_sessionCreateManyWithoutUserInput: NexusGenInputs['exercise_sessionCreateManyWithoutUserInput'];
   exercise_sessionCreateOneWithoutExercise_instanceInput: NexusGenInputs['exercise_sessionCreateOneWithoutExercise_instanceInput'];
   exercise_sessionCreateWithoutExercise_instanceInput: NexusGenInputs['exercise_sessionCreateWithoutExercise_instanceInput'];
+  exercise_sessionCreateWithoutUserInput: NexusGenInputs['exercise_sessionCreateWithoutUserInput'];
+  exercise_sessionFilter: NexusGenInputs['exercise_sessionFilter'];
+  exercise_sessionScalarWhereInput: NexusGenInputs['exercise_sessionScalarWhereInput'];
   exercise_sessionUpdateInput: NexusGenInputs['exercise_sessionUpdateInput'];
+  exercise_sessionUpdateManyDataInput: NexusGenInputs['exercise_sessionUpdateManyDataInput'];
+  exercise_sessionUpdateManyWithWhereNestedInput: NexusGenInputs['exercise_sessionUpdateManyWithWhereNestedInput'];
+  exercise_sessionUpdateManyWithoutUserInput: NexusGenInputs['exercise_sessionUpdateManyWithoutUserInput'];
   exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput: NexusGenInputs['exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput'];
+  exercise_sessionUpdateWithWhereUniqueWithoutUserInput: NexusGenInputs['exercise_sessionUpdateWithWhereUniqueWithoutUserInput'];
   exercise_sessionUpdateWithoutExercise_instanceDataInput: NexusGenInputs['exercise_sessionUpdateWithoutExercise_instanceDataInput'];
+  exercise_sessionUpdateWithoutUserDataInput: NexusGenInputs['exercise_sessionUpdateWithoutUserDataInput'];
+  exercise_sessionUpsertWithWhereUniqueWithoutUserInput: NexusGenInputs['exercise_sessionUpsertWithWhereUniqueWithoutUserInput'];
   exercise_sessionUpsertWithoutExercise_instanceInput: NexusGenInputs['exercise_sessionUpsertWithoutExercise_instanceInput'];
+  exercise_sessionWhereInput: NexusGenInputs['exercise_sessionWhereInput'];
   exercise_sessionWhereUniqueInput: NexusGenInputs['exercise_sessionWhereUniqueInput'];
+  messageCreateManyWithoutUserInput: NexusGenInputs['messageCreateManyWithoutUserInput'];
+  messageCreateWithoutUserInput: NexusGenInputs['messageCreateWithoutUserInput'];
+  messageFilter: NexusGenInputs['messageFilter'];
+  messageScalarWhereInput: NexusGenInputs['messageScalarWhereInput'];
   messageUpdateInput: NexusGenInputs['messageUpdateInput'];
+  messageUpdateManyDataInput: NexusGenInputs['messageUpdateManyDataInput'];
+  messageUpdateManyWithWhereNestedInput: NexusGenInputs['messageUpdateManyWithWhereNestedInput'];
+  messageUpdateManyWithoutUserInput: NexusGenInputs['messageUpdateManyWithoutUserInput'];
+  messageUpdateWithWhereUniqueWithoutUserInput: NexusGenInputs['messageUpdateWithWhereUniqueWithoutUserInput'];
+  messageUpdateWithoutUserDataInput: NexusGenInputs['messageUpdateWithoutUserDataInput'];
+  messageUpsertWithWhereUniqueWithoutUserInput: NexusGenInputs['messageUpsertWithWhereUniqueWithoutUserInput'];
+  messageWhereInput: NexusGenInputs['messageWhereInput'];
   messageWhereUniqueInput: NexusGenInputs['messageWhereUniqueInput'];
+  userCreateOneWithoutExercise_sessionInput: NexusGenInputs['userCreateOneWithoutExercise_sessionInput'];
+  userCreateWithoutExercise_sessionInput: NexusGenInputs['userCreateWithoutExercise_sessionInput'];
+  userCreateWithoutMessageInput: NexusGenInputs['userCreateWithoutMessageInput'];
+  userUpdateOneRequiredWithoutExercise_sessionInput: NexusGenInputs['userUpdateOneRequiredWithoutExercise_sessionInput'];
+  userUpdateOneRequiredWithoutMessageInput: NexusGenInputs['userUpdateOneRequiredWithoutMessageInput'];
+  userUpdateWithoutExercise_sessionDataInput: NexusGenInputs['userUpdateWithoutExercise_sessionDataInput'];
+  userUpdateWithoutMessageDataInput: NexusGenInputs['userUpdateWithoutMessageDataInput'];
+  userUpsertWithoutExercise_sessionInput: NexusGenInputs['userUpsertWithoutExercise_sessionInput'];
+  userUpsertWithoutMessageInput: NexusGenInputs['userUpsertWithoutMessageInput'];
+  userWhereInput: NexusGenInputs['userWhereInput'];
+  userWhereUniqueInput: NexusGenInputs['userWhereUniqueInput'];
 }
 
 export interface NexusGenFieldTypes {
@@ -446,7 +772,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Query" | "Subscription" | "auth" | "exercise" | "exercise_instance" | "exercise_session" | "message" | "user";
 
-export type NexusGenInputNames = "IntFilter" | "NullableFloatFilter" | "NullableIntFilter" | "exerciseCreateOneWithoutExercise_instanceInput" | "exerciseCreateWithoutExercise_instanceInput" | "exerciseUpdateInput" | "exerciseUpdateOneRequiredWithoutExercise_instanceInput" | "exerciseUpdateWithoutExercise_instanceDataInput" | "exerciseUpsertWithoutExercise_instanceInput" | "exerciseWhereUniqueInput" | "exercise_instanceCreateWithoutExerciseInput" | "exercise_instanceCreateWithoutExercise_sessionInput" | "exercise_instanceScalarWhereInput" | "exercise_instanceUpdateInput" | "exercise_instanceUpdateManyDataInput" | "exercise_instanceUpdateManyWithWhereNestedInput" | "exercise_instanceUpdateManyWithoutExerciseInput" | "exercise_instanceUpdateManyWithoutExercise_sessionInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceUpdateWithoutExerciseDataInput" | "exercise_instanceUpdateWithoutExercise_sessionDataInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceWhereUniqueInput" | "exercise_sessionCreateOneWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutExercise_instanceInput" | "exercise_sessionUpdateInput" | "exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput" | "exercise_sessionUpdateWithoutExercise_instanceDataInput" | "exercise_sessionUpsertWithoutExercise_instanceInput" | "exercise_sessionWhereUniqueInput" | "messageUpdateInput" | "messageWhereUniqueInput";
+export type NexusGenInputNames = "BooleanFilter" | "IntFilter" | "NullableDateTimeFilter" | "NullableFloatFilter" | "NullableIntFilter" | "NullableStringFilter" | "StringFilter" | "exerciseCreateOneWithoutExercise_instanceInput" | "exerciseCreateWithoutExercise_instanceInput" | "exerciseUpdateInput" | "exerciseUpdateOneRequiredWithoutExercise_instanceInput" | "exerciseUpdateWithoutExercise_instanceDataInput" | "exerciseUpsertWithoutExercise_instanceInput" | "exerciseWhereInput" | "exerciseWhereUniqueInput" | "exercise_instanceCreateManyWithoutExercise_sessionInput" | "exercise_instanceCreateWithoutExerciseInput" | "exercise_instanceCreateWithoutExercise_sessionInput" | "exercise_instanceFilter" | "exercise_instanceScalarWhereInput" | "exercise_instanceUpdateInput" | "exercise_instanceUpdateManyDataInput" | "exercise_instanceUpdateManyWithWhereNestedInput" | "exercise_instanceUpdateManyWithoutExerciseInput" | "exercise_instanceUpdateManyWithoutExercise_sessionInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceUpdateWithoutExerciseDataInput" | "exercise_instanceUpdateWithoutExercise_sessionDataInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceWhereInput" | "exercise_instanceWhereUniqueInput" | "exercise_sessionCreateManyWithoutUserInput" | "exercise_sessionCreateOneWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutUserInput" | "exercise_sessionFilter" | "exercise_sessionScalarWhereInput" | "exercise_sessionUpdateInput" | "exercise_sessionUpdateManyDataInput" | "exercise_sessionUpdateManyWithWhereNestedInput" | "exercise_sessionUpdateManyWithoutUserInput" | "exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput" | "exercise_sessionUpdateWithWhereUniqueWithoutUserInput" | "exercise_sessionUpdateWithoutExercise_instanceDataInput" | "exercise_sessionUpdateWithoutUserDataInput" | "exercise_sessionUpsertWithWhereUniqueWithoutUserInput" | "exercise_sessionUpsertWithoutExercise_instanceInput" | "exercise_sessionWhereInput" | "exercise_sessionWhereUniqueInput" | "messageCreateManyWithoutUserInput" | "messageCreateWithoutUserInput" | "messageFilter" | "messageScalarWhereInput" | "messageUpdateInput" | "messageUpdateManyDataInput" | "messageUpdateManyWithWhereNestedInput" | "messageUpdateManyWithoutUserInput" | "messageUpdateWithWhereUniqueWithoutUserInput" | "messageUpdateWithoutUserDataInput" | "messageUpsertWithWhereUniqueWithoutUserInput" | "messageWhereInput" | "messageWhereUniqueInput" | "userCreateOneWithoutExercise_sessionInput" | "userCreateWithoutExercise_sessionInput" | "userCreateWithoutMessageInput" | "userUpdateOneRequiredWithoutExercise_sessionInput" | "userUpdateOneRequiredWithoutMessageInput" | "userUpdateWithoutExercise_sessionDataInput" | "userUpdateWithoutMessageDataInput" | "userUpsertWithoutExercise_sessionInput" | "userUpsertWithoutMessageInput" | "userWhereInput" | "userWhereUniqueInput";
 
 export type NexusGenEnumNames = never;
 
