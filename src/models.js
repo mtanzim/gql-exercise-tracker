@@ -4,6 +4,7 @@ const {
   intArg,
   floatArg,
   queryType,
+  subscriptionField,
 } = require("@nexus/schema");
 const {
   hashPassword,
@@ -16,7 +17,6 @@ const {
   protectExercise,
   protectMessage,
 } = require("./utils");
-const { resolve } = require("path");
 
 const User = objectType({
   name: "user",
@@ -75,6 +75,15 @@ const Message = objectType({
     t.model.userId();
     t.model.timestamp();
   },
+});
+
+const NEW_MSG_SUB_KEY = "NEW_MESSAGE";
+const MessageSubscription = subscriptionField("messages", {
+  type: Message,
+  subscribe: (root, args, ctx, info) => {
+    return ctx.pubsub.asyncIterator(NEW_MSG_SUB_KEY);
+  },
+  resolve: (payload) => payload,
 });
 
 const Mutation = objectType({
@@ -169,9 +178,9 @@ const Mutation = objectType({
       args: {
         message: stringArg(),
       },
-      resolve: (_, { message }, ctx, _info) => {
+      resolve: async (_, { message }, ctx, _info) => {
         const userId = getUserId(ctx);
-        return ctx.prisma.message.create({
+        const newMsg = await ctx.prisma.message.create({
           data: {
             user: {
               connect: {
@@ -181,6 +190,8 @@ const Mutation = objectType({
             message,
           },
         });
+        ctx.pubsub.publish(NEW_MSG_SUB_KEY, newMsg);
+        return newMsg;
       },
     });
 
@@ -302,6 +313,7 @@ module.exports = {
   ExerciseSession,
   ExerciseInstance,
   Message,
+  MessageSubscription,
   Mutation,
   Query,
 };

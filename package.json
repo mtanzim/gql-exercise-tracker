@@ -21,9 +21,8 @@
   "dependencies": {
     "@nexus/schema": "^0.14.0",
     "@prisma/client": "^2.0.1",
-    "apollo-boost": "^0.4.9",
     "bcrypt": "^5.0.0",
-    "graphql": "^15.1.0",
+    "graphql": "^14.0.0",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
     "nexus-prisma": "^0.15.0",

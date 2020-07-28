@@ -9,6 +9,7 @@ const {
   ExerciseSession,
   ExerciseInstance,
   Message,
+  MessageSubscription,
   Query,
   Mutation,
 } = require("./models");
@@ -25,6 +26,7 @@ const server = new GraphQLServer({
       ExerciseSession,
       ExerciseInstance,
       Message,
+      MessageSubscription,
       Query,
       Mutation,
     ],

@@ -540,6 +540,10 @@ input StringFilter {
   startsWith: String
 }
 
+type Subscription {
+  messages: message!
+}
+
 type user {
   email: String!
   id: Int!

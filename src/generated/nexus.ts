@@ -509,6 +509,7 @@ export interface NexusGenEnums {
 export interface NexusGenRootTypes {
   Mutation: {};
   Query: {};
+  Subscription: {};
   auth: { // root type
     token: string; // String!
     user: NexusGenRootTypes['user']; // user!
@@ -651,6 +652,9 @@ export interface NexusGenFieldTypes {
     messages: NexusGenRootTypes['message'][]; // [message!]!
     users: NexusGenRootTypes['user'][]; // [user!]!
   }
+  Subscription: { // field return type
+    messages: NexusGenRootTypes['message']; // message!
+  }
   auth: { // field return type
     token: string; // String!
     user: NexusGenRootTypes['user']; // user!
@@ -766,7 +770,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Query" | "auth" | "exercise" | "exercise_instance" | "exercise_session" | "message" | "user";
+export type NexusGenObjectNames = "Mutation" | "Query" | "Subscription" | "auth" | "exercise" | "exercise_instance" | "exercise_session" | "message" | "user";
 
 export type NexusGenInputNames = "BooleanFilter" | "IntFilter" | "NullableDateTimeFilter" | "NullableFloatFilter" | "NullableIntFilter" | "NullableStringFilter" | "StringFilter" | "exerciseCreateOneWithoutExercise_instanceInput" | "exerciseCreateWithoutExercise_instanceInput" | "exerciseUpdateInput" | "exerciseUpdateOneRequiredWithoutExercise_instanceInput" | "exerciseUpdateWithoutExercise_instanceDataInput" | "exerciseUpsertWithoutExercise_instanceInput" | "exerciseWhereInput" | "exerciseWhereUniqueInput" | "exercise_instanceCreateManyWithoutExercise_sessionInput" | "exercise_instanceCreateWithoutExerciseInput" | "exercise_instanceCreateWithoutExercise_sessionInput" | "exercise_instanceFilter" | "exercise_instanceScalarWhereInput" | "exercise_instanceUpdateInput" | "exercise_instanceUpdateManyDataInput" | "exercise_instanceUpdateManyWithWhereNestedInput" | "exercise_instanceUpdateManyWithoutExerciseInput" | "exercise_instanceUpdateManyWithoutExercise_sessionInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpdateWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceUpdateWithoutExerciseDataInput" | "exercise_instanceUpdateWithoutExercise_sessionDataInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExerciseInput" | "exercise_instanceUpsertWithWhereUniqueWithoutExercise_sessionInput" | "exercise_instanceWhereInput" | "exercise_instanceWhereUniqueInput" | "exercise_sessionCreateManyWithoutUserInput" | "exercise_sessionCreateOneWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutExercise_instanceInput" | "exercise_sessionCreateWithoutUserInput" | "exercise_sessionFilter" | "exercise_sessionScalarWhereInput" | "exercise_sessionUpdateInput" | "exercise_sessionUpdateManyDataInput" | "exercise_sessionUpdateManyWithWhereNestedInput" | "exercise_sessionUpdateManyWithoutUserInput" | "exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput" | "exercise_sessionUpdateWithWhereUniqueWithoutUserInput" | "exercise_sessionUpdateWithoutExercise_instanceDataInput" | "exercise_sessionUpdateWithoutUserDataInput" | "exercise_sessionUpsertWithWhereUniqueWithoutUserInput" | "exercise_sessionUpsertWithoutExercise_instanceInput" | "exercise_sessionWhereInput" | "exercise_sessionWhereUniqueInput" | "messageCreateManyWithoutUserInput" | "messageCreateWithoutUserInput" | "messageFilter" | "messageScalarWhereInput" | "messageUpdateInput" | "messageUpdateManyDataInput" | "messageUpdateManyWithWhereNestedInput" | "messageUpdateManyWithoutUserInput" | "messageUpdateWithWhereUniqueWithoutUserInput" | "messageUpdateWithoutUserDataInput" | "messageUpsertWithWhereUniqueWithoutUserInput" | "messageWhereInput" | "messageWhereUniqueInput" | "userCreateOneWithoutExercise_sessionInput" | "userCreateWithoutExercise_sessionInput" | "userCreateWithoutMessageInput" | "userUpdateOneRequiredWithoutExercise_sessionInput" | "userUpdateOneRequiredWithoutMessageInput" | "userUpdateWithoutExercise_sessionDataInput" | "userUpdateWithoutMessageDataInput" | "userUpsertWithoutExercise_sessionInput" | "userUpsertWithoutMessageInput" | "userWhereInput" | "userWhereUniqueInput";
 
