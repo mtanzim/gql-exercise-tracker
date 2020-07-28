@@ -1,7 +1,5 @@
-import { useApolloClient } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-
+import { useApolloClient } from "@apollo/client";
 export const AUTH_INFO = "exercise-auth-info";
 
 const initState = {
@@ -25,10 +23,7 @@ export const AuthContext = React.createContext(defaultValue);
 
 export const AuthContextProvider = ({ children }) => {
   const [authState, setState] = useState(initState);
-  const history = useHistory();
   const client = useApolloClient();
-
-
 
   useEffect(() => {
     if (!authState.authenticated) {
@@ -39,21 +34,21 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, [authState]);
 
-  const login = (user, token) => {
+  const login = async (user, token) => {
     const newState = { authenticated: true, token, user };
     setState(newState);
     localStorage.setItem(AUTH_INFO, JSON.stringify(newState));
   };
-  const logout = () => {
-    setState(initState);
+  const logout = async () => {
     localStorage.removeItem(AUTH_INFO);
+    setState(initState);
     client.clearStore();
-    history.push("/login");
+    console.log("Logged out");
   };
 
   return (
-      <AuthContext.Provider value={{ authState, login, logout }}>
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={{ authState, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

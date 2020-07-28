@@ -1,4 +1,10 @@
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -6,7 +12,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import { AUTH_INFO } from "./AuthContext";
 import * as serviceWorker from "./serviceWorker";
-
 const API_ENDPOINT = "http://localhost:4000";
 
 const getToken = () => {
@@ -16,16 +21,26 @@ const getToken = () => {
   } catch (err) {
     console.error(err);
   }
-
-  return {
-    authorization: token ? `Bearer ${token}` : "",
-  };
+  return token;
 };
 
-const client = new ApolloClient({
+const authLink = setContext((_, { headers }) => {
+  const token = getToken();
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const httpLink = createHttpLink({
   uri: API_ENDPOINT,
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  headers: { ...getToken() },
 });
 
 ReactDOM.render(
