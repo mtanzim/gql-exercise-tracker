@@ -2,11 +2,16 @@ import { gql } from "@apollo/client";
 
 export const SUBSCRIBE_MESSAGES = gql`
   subscription MessageSub {
-    messages {
+    messageAdded {
       message
       id
       timestamp
-      userId
+      user {
+        id
+        name
+        email
+        isAdmin
+      }
     }
   }
 `;

@@ -99,7 +99,6 @@ export interface NexusGenInputs {
   }
   exerciseUpdateInput: { // input type
     exercise_instance?: NexusGenInputs['exercise_instanceUpdateManyWithoutExerciseInput'] | null; // exercise_instanceUpdateManyWithoutExerciseInput
-    id?: number | null; // Int
     label?: string | null; // String
     name?: string | null; // String
   }
@@ -110,7 +109,6 @@ export interface NexusGenInputs {
     upsert?: NexusGenInputs['exerciseUpsertWithoutExercise_instanceInput'] | null; // exerciseUpsertWithoutExercise_instanceInput
   }
   exerciseUpdateWithoutExercise_instanceDataInput: { // input type
-    id?: number | null; // Int
     label?: string | null; // String
     name?: string | null; // String
   }
@@ -167,13 +165,11 @@ export interface NexusGenInputs {
     duration?: number | null; // Float
     exercise?: NexusGenInputs['exerciseUpdateOneRequiredWithoutExercise_instanceInput'] | null; // exerciseUpdateOneRequiredWithoutExercise_instanceInput
     exercise_session?: NexusGenInputs['exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput'] | null; // exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput
-    id?: number | null; // Int
     repetitions?: number | null; // Int
     weight?: number | null; // Float
   }
   exercise_instanceUpdateManyDataInput: { // input type
     duration?: number | null; // Float
-    id?: number | null; // Int
     repetitions?: number | null; // Int
     weight?: number | null; // Float
   }
@@ -214,14 +210,12 @@ export interface NexusGenInputs {
   exercise_instanceUpdateWithoutExerciseDataInput: { // input type
     duration?: number | null; // Float
     exercise_session?: NexusGenInputs['exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput'] | null; // exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput
-    id?: number | null; // Int
     repetitions?: number | null; // Int
     weight?: number | null; // Float
   }
   exercise_instanceUpdateWithoutExercise_sessionDataInput: { // input type
     duration?: number | null; // Float
     exercise?: NexusGenInputs['exerciseUpdateOneRequiredWithoutExercise_instanceInput'] | null; // exerciseUpdateOneRequiredWithoutExercise_instanceInput
-    id?: number | null; // Int
     repetitions?: number | null; // Int
     weight?: number | null; // Float
   }
@@ -286,13 +280,11 @@ export interface NexusGenInputs {
   }
   exercise_sessionUpdateInput: { // input type
     exercise_instance?: NexusGenInputs['exercise_instanceUpdateManyWithoutExercise_sessionInput'] | null; // exercise_instanceUpdateManyWithoutExercise_sessionInput
-    id?: number | null; // Int
     note?: string | null; // String
     timestamp?: any | null; // DateTime
     user?: NexusGenInputs['userUpdateOneRequiredWithoutExercise_sessionInput'] | null; // userUpdateOneRequiredWithoutExercise_sessionInput
   }
   exercise_sessionUpdateManyDataInput: { // input type
-    id?: number | null; // Int
     note?: string | null; // String
     timestamp?: any | null; // DateTime
   }
@@ -322,14 +314,12 @@ export interface NexusGenInputs {
     where: NexusGenInputs['exercise_sessionWhereUniqueInput']; // exercise_sessionWhereUniqueInput!
   }
   exercise_sessionUpdateWithoutExercise_instanceDataInput: { // input type
-    id?: number | null; // Int
     note?: string | null; // String
     timestamp?: any | null; // DateTime
     user?: NexusGenInputs['userUpdateOneRequiredWithoutExercise_sessionInput'] | null; // userUpdateOneRequiredWithoutExercise_sessionInput
   }
   exercise_sessionUpdateWithoutUserDataInput: { // input type
     exercise_instance?: NexusGenInputs['exercise_instanceUpdateManyWithoutExercise_sessionInput'] | null; // exercise_instanceUpdateManyWithoutExercise_sessionInput
-    id?: number | null; // Int
     note?: string | null; // String
     timestamp?: any | null; // DateTime
   }
@@ -379,13 +369,11 @@ export interface NexusGenInputs {
     userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
   messageUpdateInput: { // input type
-    id?: number | null; // Int
     message?: string | null; // String
     timestamp?: any | null; // DateTime
     user?: NexusGenInputs['userUpdateOneRequiredWithoutMessageInput'] | null; // userUpdateOneRequiredWithoutMessageInput
   }
   messageUpdateManyDataInput: { // input type
-    id?: number | null; // Int
     message?: string | null; // String
     timestamp?: any | null; // DateTime
   }
@@ -409,7 +397,6 @@ export interface NexusGenInputs {
     where: NexusGenInputs['messageWhereUniqueInput']; // messageWhereUniqueInput!
   }
   messageUpdateWithoutUserDataInput: { // input type
-    id?: number | null; // Int
     message?: string | null; // String
     timestamp?: any | null; // DateTime
   }
@@ -463,7 +450,6 @@ export interface NexusGenInputs {
   }
   userUpdateWithoutExercise_sessionDataInput: { // input type
     email?: string | null; // String
-    id?: number | null; // Int
     isAdmin?: boolean | null; // Boolean
     message?: NexusGenInputs['messageUpdateManyWithoutUserInput'] | null; // messageUpdateManyWithoutUserInput
     name?: string | null; // String
@@ -472,7 +458,6 @@ export interface NexusGenInputs {
   userUpdateWithoutMessageDataInput: { // input type
     email?: string | null; // String
     exercise_session?: NexusGenInputs['exercise_sessionUpdateManyWithoutUserInput'] | null; // exercise_sessionUpdateManyWithoutUserInput
-    id?: number | null; // Int
     isAdmin?: boolean | null; // Boolean
     name?: string | null; // String
     password?: string | null; // String
@@ -653,7 +638,7 @@ export interface NexusGenFieldTypes {
     users: NexusGenRootTypes['user'][]; // [user!]!
   }
   Subscription: { // field return type
-    messages: NexusGenRootTypes['message']; // message!
+    messageAdded: NexusGenRootTypes['message']; // message!
   }
   auth: { // field return type
     token: string; // String!

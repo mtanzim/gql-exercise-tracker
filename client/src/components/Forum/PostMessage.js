@@ -15,7 +15,7 @@ export const PostMessage = () => {
       const { messages: current } = cache.readQuery({
         query: GET_MESSAGES,
       });
-      const updated = current.concat([createMessage]);
+      const updated = [createMessage].concat(current);
       cache.writeQuery({
         query: GET_MESSAGES,
         data: { messages: updated },

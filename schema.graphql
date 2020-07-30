@@ -70,14 +70,12 @@ input exercise_instanceUpdateInput {
   duration: Float
   exercise: exerciseUpdateOneRequiredWithoutExercise_instanceInput
   exercise_session: exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput
-  id: Int
   repetitions: Int
   weight: Float
 }
 
 input exercise_instanceUpdateManyDataInput {
   duration: Float
-  id: Int
   repetitions: Int
   weight: Float
 }
@@ -114,7 +112,6 @@ input exercise_instanceUpdateManyWithWhereNestedInput {
 input exercise_instanceUpdateWithoutExercise_sessionDataInput {
   duration: Float
   exercise: exerciseUpdateOneRequiredWithoutExercise_instanceInput
-  id: Int
   repetitions: Int
   weight: Float
 }
@@ -122,7 +119,6 @@ input exercise_instanceUpdateWithoutExercise_sessionDataInput {
 input exercise_instanceUpdateWithoutExerciseDataInput {
   duration: Float
   exercise_session: exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput
-  id: Int
   repetitions: Int
   weight: Float
 }
@@ -216,14 +212,12 @@ input exercise_sessionScalarWhereInput {
 
 input exercise_sessionUpdateInput {
   exercise_instance: exercise_instanceUpdateManyWithoutExercise_sessionInput
-  id: Int
   note: String
   timestamp: DateTime
   user: userUpdateOneRequiredWithoutExercise_sessionInput
 }
 
 input exercise_sessionUpdateManyDataInput {
-  id: Int
   note: String
   timestamp: DateTime
 }
@@ -253,7 +247,6 @@ input exercise_sessionUpdateOneRequiredWithoutExercise_instanceInput {
 }
 
 input exercise_sessionUpdateWithoutExercise_instanceDataInput {
-  id: Int
   note: String
   timestamp: DateTime
   user: userUpdateOneRequiredWithoutExercise_sessionInput
@@ -261,7 +254,6 @@ input exercise_sessionUpdateWithoutExercise_instanceDataInput {
 
 input exercise_sessionUpdateWithoutUserDataInput {
   exercise_instance: exercise_instanceUpdateManyWithoutExercise_sessionInput
-  id: Int
   note: String
   timestamp: DateTime
 }
@@ -310,7 +302,6 @@ input exerciseCreateWithoutExercise_instanceInput {
 
 input exerciseUpdateInput {
   exercise_instance: exercise_instanceUpdateManyWithoutExerciseInput
-  id: Int
   label: String
   name: String
 }
@@ -323,7 +314,6 @@ input exerciseUpdateOneRequiredWithoutExercise_instanceInput {
 }
 
 input exerciseUpdateWithoutExercise_instanceDataInput {
-  id: Int
   label: String
   name: String
 }
@@ -394,14 +384,12 @@ input messageScalarWhereInput {
 }
 
 input messageUpdateInput {
-  id: Int
   message: String
   timestamp: DateTime
   user: userUpdateOneRequiredWithoutMessageInput
 }
 
 input messageUpdateManyDataInput {
-  id: Int
   message: String
   timestamp: DateTime
 }
@@ -424,7 +412,6 @@ input messageUpdateManyWithWhereNestedInput {
 }
 
 input messageUpdateWithoutUserDataInput {
-  id: Int
   message: String
   timestamp: DateTime
 }
@@ -542,7 +529,7 @@ input StringFilter {
 }
 
 type Subscription {
-  messages: message!
+  messageAdded: message!
 }
 
 type user {
@@ -589,7 +576,6 @@ input userUpdateOneRequiredWithoutMessageInput {
 
 input userUpdateWithoutExercise_sessionDataInput {
   email: String
-  id: Int
   isAdmin: Boolean
   message: messageUpdateManyWithoutUserInput
   name: String
@@ -599,7 +585,6 @@ input userUpdateWithoutExercise_sessionDataInput {
 input userUpdateWithoutMessageDataInput {
   email: String
   exercise_session: exercise_sessionUpdateManyWithoutUserInput
-  id: Int
   isAdmin: Boolean
   name: String
   password: String

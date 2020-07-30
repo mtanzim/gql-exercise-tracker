@@ -79,7 +79,7 @@ const Message = objectType({
 });
 
 const NEW_MSG_SUB_KEY = "NEW_MESSAGE";
-const MessageSubscription = subscriptionField("messages", {
+const MessageSubscription = subscriptionField("messageAdded", {
   type: Message,
   subscribe: (root, args, ctx, info) => {
     return ctx.pubsub.asyncIterator(NEW_MSG_SUB_KEY);
@@ -265,7 +265,10 @@ const Query = queryType({
     t.list.field("messages", {
       type: "message",
       resolve: (_, _args, ctx) => {
-        return ctx.prisma.message.findMany();
+        return ctx.prisma.message.findMany({
+          take: 5,
+          orderBy: { timestamp: "desc" },
+        });
       },
     });
 

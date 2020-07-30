@@ -3,8 +3,11 @@ import {
   ApolloProvider,
   createHttpLink,
   InMemoryCache,
+  split
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from '@apollo/client/utilities';
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -13,6 +16,7 @@ import App from "./App";
 import { AUTH_INFO } from "./AuthContext";
 import * as serviceWorker from "./serviceWorker";
 const API_ENDPOINT = "http://localhost:4000";
+const WS_ENDPOINT = "ws://localhost:4000/";
 
 const getToken = () => {
   let token = null;
@@ -38,8 +42,27 @@ const httpLink = createHttpLink({
   uri: API_ENDPOINT,
 });
 
+const wsLink = new WebSocketLink({
+  uri: WS_ENDPOINT,
+  options: {
+    reconnect: true,
+  },
+});
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  authLink.concat(httpLink)
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache(),
 });
 
