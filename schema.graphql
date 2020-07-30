@@ -363,6 +363,7 @@ type message {
   id: Int!
   message: String!
   timestamp: DateTime
+  user: user!
   userId: Int!
 }
 

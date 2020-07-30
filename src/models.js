@@ -73,6 +73,7 @@ const Message = objectType({
     t.model.id();
     t.model.message();
     t.model.userId();
+    t.model.user();
     t.model.timestamp();
   },
 });

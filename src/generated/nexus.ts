@@ -683,6 +683,7 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     message: string; // String!
     timestamp: any | null; // DateTime
+    user: NexusGenRootTypes['user']; // user!
     userId: number; // Int!
   }
   user: { // field return type
