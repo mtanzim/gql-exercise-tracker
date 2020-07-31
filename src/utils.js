@@ -36,14 +36,7 @@ const getUserId = (ctx) => {
   throw new Error("Not authenticated");
 };
 
-const protectExerciseSession = async (
-  root,
-  args,
-  ctx,
-  info,
-  originalResolver
-) => {
-  const sessionId = args.where.id;
+const validateUserOfSession = async (sessionId, ctx) => {
   const userId = getUserId(ctx);
   const session = await ctx.prisma.exercise_session.findOne({
     where: { id: sessionId },
@@ -51,6 +44,16 @@ const protectExerciseSession = async (
   if (userId !== session.userId) {
     throw new Error("Unauthorized");
   }
+};
+
+const protectExerciseSession = async (
+  root,
+  args,
+  ctx,
+  info,
+  originalResolver
+) => {
+  await validateUserOfSession(args.where.id, ctx);
   return originalResolver(root, args, ctx, info);
 };
 
@@ -111,4 +114,5 @@ module.exports = {
   protectExercise,
   protectMessage,
   verifyAdmin,
+  validateUserOfSession,
 };

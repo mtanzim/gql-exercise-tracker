@@ -16,6 +16,7 @@ const {
   verifyAdmin,
   protectExercise,
   protectMessage,
+  validateUserOfSession,
 } = require("./utils");
 
 const User = objectType({
@@ -225,12 +226,13 @@ const Mutation = objectType({
         duration: floatArg(),
         repetitions: intArg(),
       },
-      resolve: (
+      resolve: async (
         _,
         { exerciseId, sessionId, weight, duration, repetitions },
         ctx,
         _info
       ) => {
+        await validateUserOfSession(sessionId, ctx);
         return ctx.prisma.exercise_instance.create({
           data: {
             exercise: {
@@ -257,7 +259,8 @@ const Query = queryType({
   definition(t) {
     t.list.field("users", {
       type: "user",
-      resolve: (_, _args, ctx) => {
+      resolve: async (_, _args, ctx) => {
+        await verifyAdmin(ctx);
         return ctx.prisma.user.findMany();
       },
     });
@@ -296,7 +299,7 @@ const Query = queryType({
       },
       resolve: (_, { sessionId }, ctx) => {
         const userId = getUserId(ctx);
-
+        
         return ctx.prisma.exercise_instance.findMany({
           where: {
             sessionId,
