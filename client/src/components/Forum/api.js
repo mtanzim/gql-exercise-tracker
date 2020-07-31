@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { CommonUser } from "../api";
 
 export const SUBSCRIBE_MESSAGES = gql`
   subscription MessageSub {
@@ -7,13 +8,11 @@ export const SUBSCRIBE_MESSAGES = gql`
       id
       timestamp
       user {
-        id
-        name
-        email
-        isAdmin
+        ...ForumUser
       }
     }
   }
+  ${CommonUser.fragments.user}
 `;
 
 export const GET_MESSAGES = gql`
@@ -22,15 +21,13 @@ export const GET_MESSAGES = gql`
       id
       message
       userId
-      user {
-        id
-        name
-        email
-        isAdmin
-      }
       timestamp
+      user {
+        ...CommonUser
+      }
     }
   }
+  ${CommonUser.fragments.user}
 `;
 
 export const CREATE_MESSAGE = gql`
@@ -40,14 +37,12 @@ export const CREATE_MESSAGE = gql`
       message
       userId
       user {
-        id
-        name
-        email
-        isAdmin
+        ...CommonUser
       }
       timestamp
     }
   }
+  ${CommonUser.fragments.user}
 `;
 
 export const DELETE_MESSAGE = gql`

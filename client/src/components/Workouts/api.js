@@ -1,34 +1,39 @@
 import { gql } from "@apollo/client";
+import { CommonUser } from "../api";
+import { CommonExercise } from "../Exercises/api";
 
+export const CommonSession = {
+  fragments: {
+    exerciseSessions: gql`
+      fragment CommonSession on exercise_session {
+        id
+        note
+        timestamp
+        user {
+          ...CommonUser
+        }
+      }
+      ${CommonUser.fragments.user}
+    `,
+  },
+};
 
 export const GET_SESSIONS = gql`
   query GetSessions {
     exerciseSessions {
-      id
-      note
-      timestamp
-      user {
-        id
-        name
-        email
-      }
+      ...CommonSession
     }
   }
+  ${CommonSession.fragments.exerciseSessions}
 `;
 
 export const MAKE_SESSION = gql`
   mutation CreateExerciseSession($note: String) {
     createExerciseSession(note: $note) {
-      id
-      note
-      timestamp
-      user {
-        id
-        name
-        email
-      }
+      ...CommonSession
     }
   }
+  ${CommonSession.fragments.exerciseSessions}
 `;
 
 export const DELETE_ONE_SESSION = gql`
@@ -42,17 +47,32 @@ export const DELETE_ONE_SESSION = gql`
 export const UPDATE_SESSION = gql`
   mutation UpdateOneSession($id: Int!, $note: String) {
     updateOneexercise_session(where: { id: $id }, data: { note: $note }) {
-      id
-      note
-      timestamp
-      user {
-        id
-        name
-        email
-      }
+      ...CommonSession
     }
   }
+  ${CommonSession.fragments.exerciseSessions}
 `;
+
+export const CommonInstance = {
+  fragments: {
+    exerciseInstance: gql`
+      fragment CommonInstance on exercise_instance {
+        id
+        weight
+        duration
+        repetitions
+        exercise {
+          ...CommonExercise
+        }
+        exercise_session {
+          ...CommonSession
+        }
+      }
+      ${CommonExercise.fragments.exercise}
+      ${CommonSession.fragments.exerciseSessions}
+    `,
+  },
+};
 
 export const CREATE_EXERCISE_INSTANCE = gql`
   mutation CreateExerciseInstance(
@@ -69,49 +89,19 @@ export const CREATE_EXERCISE_INSTANCE = gql`
       duration: $duration
       repetitions: $repetitions
     ) {
-      id
-      weight
-      duration
-      repetitions
-      exercise {
-        id
-        name
-        label
-      }
-      exercise_session {
-        id
-        timestamp
-        user {
-          id
-          email
-        }
-      }
+      ...CommonInstance
     }
   }
+  ${CommonInstance.fragments.exerciseInstance}
 `;
 
 export const GET_INSTANCES = gql`
   query GetInstances($sessionId: Int!) {
     exerciseInstances(sessionId: $sessionId) {
-      id
-      weight
-      duration
-      repetitions
-      exercise {
-        id
-        name
-        label
-      }
-      exercise_session {
-        id
-        timestamp
-        user {
-          id
-          email
-        }
-      }
+      ...CommonInstance
     }
   }
+  ${CommonInstance.fragments.exerciseInstance}
 `;
 
 export const DELETE_INSTANCE = gql`

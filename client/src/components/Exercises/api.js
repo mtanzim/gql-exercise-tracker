@@ -1,33 +1,42 @@
 import { gql } from "@apollo/client";
 
+export const CommonExercise = {
+  fragments: {
+    exercise: gql`
+      fragment CommonExercise on exercise {
+        id
+        label
+        name
+      }
+    `,
+  },
+};
+
 export const EXERCISES = gql`
   {
     exercises {
-      id
-      label
-      name
+      ...CommonExercise
     }
   }
+  ${CommonExercise.fragments.exercise}
 `;
 
 export const CREATE_EXERCISE = gql`
   mutation CreateExercise($name: String!, $label: String!) {
     createExercise(name: $name, label: $label) {
-      id
-      name
-      label
+      ...CommonExercise
     }
   }
+  ${CommonExercise.fragments.exercise}
 `;
 
 export const DELETE_EXERICSE = gql`
   mutation DeleteOneExercise($id: Int!) {
     deleteOneexercise(where: { id: $id }) {
-      id
-      name
-      label
+      ...CommonExercise
     }
   }
+  ${CommonExercise.fragments.exercise}
 `;
 
 export const UPDATE_EXERCISE = gql`
@@ -36,9 +45,8 @@ export const UPDATE_EXERCISE = gql`
       where: { id: $id }
       data: { name: $name, label: $label }
     ) {
-      id
-      name
-      label
+      ...CommonExercise
     }
   }
+  ${CommonExercise.fragments.exercise}
 `;
